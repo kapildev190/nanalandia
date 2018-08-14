@@ -51,6 +51,8 @@ $(document).ready(function() {
             data: $('#login_form').serialize(),
             dataType: 'json',
             success: function (data) {
+				//console.log(data);
+				//return false;
                 if(data['status']){
                     window.location = data['type'];
                 }else{
@@ -101,5 +103,71 @@ $(document).ready(function() {
         });
     });
 
+	
+	//Request Form
+    $("#request_form").submit(function(e) { 
+        e.preventDefault();
+        $.ajax({
+            type: 'post',
+            url: 'server/request.php?action=request',
+            data: $('#request_form').serialize(),
+            dataType: 'json',
+            success: function (data) {
+				 
+                if(data['status']){ console.log('true');
+                    $('#request_form')[0].reset();
+                    var results = '<div class="alert alert-success alert-dismissible" role="alert">\n' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                        '<strong>Success!</strong>'+data['msg']+
+                        '</div>';
+                    $('#request_results').html(results);
+                }else{
+                    var errors_list = data['msg'].toString().split(",");
+                    var errors = '';
+                    for(var i = 0; i < errors_list.length; i++){
+                        errors += '<li>'+errors_list[i]+'</li>';
+                    }
+                    var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                        '<strong>Warning!</strong>'+errors+
+                        '</div>';
+                    $('#request_results').html(results);
+                }
+            }
+        });
+    });
 
+	//Employee Form
+    $("#employee_form").submit(function(e) { 
+        e.preventDefault();
+        $.ajax({
+            type: 'post',
+            url: 'server/request.php?action=employee',
+            data: $('#employee_form').serialize(),
+            dataType: 'json',
+            success: function (data) {
+				 
+                if(data['status']){ console.log('true');
+                    $('#employee_form')[0].reset();
+                    var results = '<div class="alert alert-success alert-dismissible" role="alert">\n' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                        '<strong>Success!</strong>'+data['msg']+
+                        '</div>';
+                    $('#employee_results').html(results);
+                }else{
+                    var errors_list = data['msg'].toString().split(",");
+                    var errors = '';
+                    for(var i = 0; i < errors_list.length; i++){
+                        errors += '<li>'+errors_list[i]+'</li>';
+                    }
+					var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                        '<strong>Warning!</strong>'+errors+
+                        '</div>';
+					$('#employee_results').html(results);
+                }
+            }
+        });
+    });
+	
 });

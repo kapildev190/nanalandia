@@ -22,6 +22,7 @@
         include 'includes/modals/register.php';
 		
 		include 'includes/modals/request.php';
+		
         ?>
 
         <!-- MAIN CONTENT -->
@@ -35,7 +36,12 @@
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <p class="mainbtn"><a href="#" onClick="Close('#makerequest', '#content_makerequest');">Solicitar domestica</a></p>
+						<?php if( $loggedUserId > 0 ){
+							?>
+							<p class="mainbtn"><a href="javascript:;" onClick="Display('#makerequest', '#content_makerequest');">Solicitar domestica</a></p>
+							<?php } else{ ?>
+							<p class="mainbtn"><a href="javascript:;" onclick="Display('#content-window-light-box', '#content-login-box')">Solicitar domestica</a></p>		
+							<?php	} ?>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <p>Clic aquí si estas buscando una trabajadora domestica</p>
@@ -100,7 +106,7 @@
                     </div>
                     <div class="col-lg-5 col-lg-push-1 col-md-5 col-md-push-1">
                         <div class="crtica"></div>
-                        <p class="btn2"><a href="#" onClick="Display('#register_layout', '#content_register')">Quiero registrarme</a></p>
+                        <p class="btn2"><a href="javascript:;" onClick="Display('#register_layout', '#content_register')">Quiero registrarme</a></p>
                     </div>
                 </div>
             </div>

@@ -34,14 +34,14 @@
     font-size: 15px;
 }
 
-#content_makerequest input[type="button"], .overall_class input[type="button"] {
+#content_makerequest input[type="button"], .overall_class input[type="button"], input[type="submit"] {
     background-color: #a31b52;
     border: 0;
     font-family: 'Roboto', sans-serif;
     color: #ffffff;
     font-size: 15px;
     display: block;
-    width: 98%;
+    width: 100%;
     margin: 12px 0;
     height: 48px;
     border-radius: 5px;
@@ -54,12 +54,13 @@
 }
 
 #content-login-box,#content-register-box {
-    width: 350px;
+    max-width: 350px;
+    width: 100%;
     margin: auto;
     overflow: hidden;
     background: #fff;
     margin-top: 0%;
-    padding: 2%;
+    padding: 20px 20px 30px;
 }
 
 .close_icon_group {
@@ -106,9 +107,25 @@
 
 .input {
     display: block;
-    width: 96%;
+    width: 100%;
     margin: 10px 0;
     height: 46px;
+    border: 1px solid #f996c5;
+    border-radius: 7px;
+    padding-left: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    color: black;
+    box-shadow: 0 1px 2px 0 rgba(46,60,73,.05);
+    outline: none;
+    font-weight: 300;
+	
+}
+
+.textarea {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
     border: 1px solid #f996c5;
     border-radius: 7px;
     padding-left: 12px;

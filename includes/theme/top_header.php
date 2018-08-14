@@ -1,4 +1,7 @@
 <?php
+$root  = "http://".$_SERVER['HTTP_HOST'];
+$root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+
 echo '<div class="container-fluid topmenu">
             <div class="container">
                 <div class="row">

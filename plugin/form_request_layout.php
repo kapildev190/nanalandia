@@ -1,14 +1,12 @@
-<?php
-echo '<!-- REQUEST POPUP -->
-        <div class="overall_class" id="makerequest">
-			<div id="content_makerequest" style=" transition: 0.5s; margin-top: 10%;">
+<div class="overall_class" id="makerequest">
+    <div id="content_makerequest" style=" transition: 0.5s; margin-top: 10%;">
                         <!--Close Button-->
-                        <div class="close_icon_group" onClick="Close(\'#makerequest\', \'#content_makerequest\');"></div>
+                        <div class="close_icon_group" onClick="Close('#makerequest', '#content_makerequest');"></div>
                             <h2>Formulario de <span>Contratación</span></h2>
                                <p class="text-desc" style=" padding-bottom:16px; line-height:1.5">
                                Complete el siguiente formulario con la informacion solicitada para conocer el perfil del personal que precisa. Una vez hecho esto, sera contactado por nuestro equipo lo antes posible.
                                 </p>
-                    <form id="request_form">
+                           
                            <div class="content-input">
                                 <div class="text-desc"><strong>Tipo de vivienda *</strong></div>
                                
@@ -81,17 +79,17 @@ echo '<!-- REQUEST POPUP -->
                                  </div>
                                    		
                                         <label class="container_" value="" name="dog" id="dog">Perros
-                                     	    <input type="checkbox" name="pets" value="dog" >
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                         <label class="container_" value="" name="bird" id="bird">Aves
-                                     	    <input type="checkbox" name="pets" value="bird" >
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                         <label class="container_" value="" name="cat" id="cat">Gatos
-                                     	    <input type="checkbox" name="pets" value="cat">
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
@@ -100,20 +98,27 @@ echo '<!-- REQUEST POPUP -->
                                 
                                 
                                 <div class="content-input">
-									<label class="container_" value="" name="no-pet" id="no-pet">Ninguno
-										<input type="checkbox" name="pets" value="no-pet">
-										<span class="checkmark"></span>
-									</label>
-									<label class="container_" value="" name="other" id="other">Otro
-										<input type="checkbox" name="pets" value="other">
-										<span class="checkmark"></span>
-									</label>                                        
-									<input type="text" class="input" value="" name="other_pet" id="other_pet" placeholder="Otra Mascota" autocomplete="off">
+                                    	
+                                        
+                                        
+                                        <label class="container_" value="" name="no-pet" id="no-pet">Ninguno
+                                     	    <input type="checkbox" >
+                                      	    <span class="checkmark"></span>
+                                        </label>
+                                        
+                                        <label class="container_" value="" name="other" id="other">Otro
+                                     	    <input type="checkbox" >
+                                      	    <span class="checkmark"></span>
+                                        </label>
+                                        
+                                  <input type="text" class="input" value="" name="other_pet" id="other_pet" placeholder="Otra Mascota" autocomplete="off">
                                 </div>
                                 
+                                
                                 <div class="content-input">
-                                <div class="text-desc"><strong>Cantidad de mascotas en casa</strong></div>                               
-                                    <select class="select_group" name="no_of_pets" id="no_of_pets" style="margin-top:10px; margin-bottom:10px">
+                                <div class="text-desc"><strong>Cantidad de mascotas en casa</strong></div>
+                               
+                                    <select class="select_group" name="housing_type" id="housing_type" style="margin-top:10px; margin-bottom:10px">
                                             <option value="0">Seleccionar respuesta</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -121,15 +126,20 @@ echo '<!-- REQUEST POPUP -->
                                             <option value="4">4</option>
                                             <option value="5">5</option>
                                     </select>
+                                
+                                
                                </div>
                             
                                <div class="content-input">
-									<div class="text-desc"><strong>Servicio Domestico Actual *</strong></div>                               
+                                <div class="text-desc"><strong>Servicio Domestico Actual *</strong></div>
+                               
                                     <select class="select_group" name="employee_type" id="employee_type" style="margin-top:10px; margin-bottom:10px">
-										<option value="0">Seleccionar respuesta</option>
-										<option value="1">si</option>
-										<option value="2">no</option>
+                                            <option value="0">Seleccionar respuesta</option>
+                                            <option value="1">si</option>
+                                            <option value="2">no</option>
                                     </select>
+                                
+                                
                                </div>
                            	   <h2>Perfil empleada</h2>
                                
@@ -159,35 +169,48 @@ echo '<!-- REQUEST POPUP -->
                                    <option value="30-35">30-35</option>
                                    <option value="35+">35+</option>
                                     </select>
-                                </div>
-								<div class="content-input">
-									<div class="text-desc"><strong>Nacionalidad de la empleada *</strong></div>
-									<select class="select_group" name="employee_nationality" id="employee_nationality" style="margin-top:10px; margin-bottom:10px">
-										<option value="0">Seleccionar respuesta</option>
-										<option value="Dominicana">Dominicana</option>
-										<option value="Haitiana">Haitiana</option>
-										<option value="Venezonala">Venezonala</option>
-										<option value="Indiferente">Indiferente</option>
-                                    </select>
+                                
+                                
                                </div>
-								<div class="content-input">
-									<div class="text-desc"><strong>Nivel academico</strong></div>
-									<select class="select_group" name="academic_level" id="academic_level" style="margin-top:10px; margin-bottom:10px">
+                               
+                               <div class="content-input">
+                                <div class="text-desc"><strong>Nacionalidad de la empleada *</strong></div>
+                               
+                                 <select class="select_group" name="employee_nationality" id="employee_nationality" style="margin-top:10px; margin-bottom:10px">
+                                            <option value="0">Seleccionar respuesta</option>
+                                            <option value="Dominicana">Dominicana</option>
+                                            <option value="Haitiana">Haitiana</option>
+                                            <option value="Venezonala">Venezonala</option>
+                                            <option value="Indiferente">Indiferente</option>
+                                    </select>
+                                
+                                
+                               </div>
+                               
+                               <div class="content-input">
+                                <div class="text-desc"><strong>Nivel academico</strong></div>
+                               
+                                 <select class="select_group" name="academic_level" id="academic_level" style="margin-top:10px; margin-bottom:10px">
                                             <option value="0">Seleccionar respuesta</option>
                                             <option value="Básico">Básico</option>
                                             <option value="Bachiller">Bachiller</option>
                                             <option value="Universitario">Universitario</option>
                                             <option value="Técnico">Técnico</option>
                                     </select>
+                                
+                                
                                </div>
                                
                                <div class="content-input">
                                 <div class="text-desc"><strong>Experiencia laboral</strong></div>
-									<select class="select_group" name="work_experience" id="work_experience" style="margin-top:10px; margin-bottom:10px">
+                               
+                                    <select class="select_group" name="academic_level" id="academic_level" style="margin-top:10px; margin-bottom:10px">
                                             <option value="0">Seleccionar respuesta</option>
-										  <option value="Si">Si</option>
-										  <option value="No">No</option>
-                                    </select>                                
+                                      <option value="Si">Si</option>
+                                      <option value="No">No</option>
+                                    </select>
+                                
+                                
                                </div>
                                
                               <div class="content-check-box">
@@ -197,25 +220,29 @@ echo '<!-- REQUEST POPUP -->
                                  </div>
                                    		
                                       <label class="container_" value="" name="christian">Cristiana
-                                     	    <input type="checkbox" name="religious_affiliation" value="christian" >
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                       <label class="container_" value="" name="catholic">Católica
-                                     	    <input type="checkbox" name="religious_affiliation" value="catholic" >
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                       <label class="container_" value="" name="indifferent_religion">Indiferente
-                                   	    <input type="checkbox" name="religious_affiliation" value="indifferent_religion" >
+                                   	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
-                                        </label>                                        
+                                        </label>
+                                        
+                                        
                                 </div>
-                                <div class="content-input">                                       
+                                <div class="content-input">
+                                       
                                   <label class="container_" value="" name="other_religion">Otro
-										<input type="checkbox" name="religious_affiliation" value="other_religion">
-										<span class="checkmark"></span>
-									</label>
+                                     	    <input type="checkbox" >
+                                      	    <span class="checkmark"></span>
+                                        </label>
+                                        
                                   <input type="text" class="input" value="" name="other_religion_text" id="other_religion_text" placeholder="Otra Religión" autocomplete="off">
                                 </div>
                                 
@@ -245,48 +272,62 @@ echo '<!-- REQUEST POPUP -->
                                  </div>
                                    		
                                       <label class="container_" value="" name="clean">Limpiar
-                                   	    <input type="checkbox" name="work_to_be_done" value="clean" >
+                                   	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
+                                        
                                       <label class="container_" value="" name="wash">Lavar
-                                   	    <input type="checkbox" name="work_to_be_done" value="wash"  >
+                                   	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
+                                        
                                       <label class="container_" value="" name="child_security">Cuidar niños
-                                   	    <input type="checkbox" name="work_to_be_done" value="child_security" >
+                                   	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
+                                        
                                         <label class="container_" value="" name="cook">Cocinar
-                                     	    <input type="checkbox" name="work_to_be_done" value="cook">
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
+                                        
                                 </div>
                                 <div class="content-input">
-                                    <label class="container_" value="" name="iron">Planchar
-                               	    <input type="checkbox" name="work_to_be_done" value="iron">
+                                       
+                                  <label class="container_" value="" name="iron">Planchar
+                               	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
+                                        
                                   <label class="container_" value="" name="other_job">Otro
-                                     	    <input type="checkbox" name="work_to_be_done" value="other_job">
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
-                                        </label>                                        
+                                        </label>
+                                        
                                         <input type="text" class="input" value="" name="other_job" placeholder="Otra Ocupación" autocomplete="off">
-                                </div>                                
+                                </div>
+                                
                                </div>
+                               
+                               
                                <div class="content-input">
                                 <div class="text-desc"><strong>Modalidad de horario *</strong></div>
                                
-                                    <select class="select_group" name="day_modal" style="margin-top:10px; margin-bottom:10px">
+                                    <select class="select_group" name="hour_modal" style="margin-top:10px; margin-bottom:10px">
                                     		<option value="0">Seleccionar respuesta</option>
                                       <option value="Lunes-Viernes" selected="selected">Lunes-Viernes</option>
                                       <option value="Lunes-Sabados">Lunes-Sabados</option>
                                       <option value="Domingos-Viernes">Domingos-Viernes</option>
                                       <option value="Viernes-Lunes">Viernes-Lunes</option>
                                       <option value="Sabado-Lunes">Sabado-Lunes</option>
-                                      <option value="Otro">Otro</option>                                            
-                                    </select>                                
+                                      <option value="Otro">Otro</option>
+                                            
+                                    </select>
+                                
+                                
                                </div>
                                
+                           
                                 <div class="content-input">
                                     <div class="text-desc"><strong>Hora de entrada *</strong></div>
                                   <input type="text" class="input" value="" name="starting_hour" placeholder="Hora" autocomplete="off">
@@ -297,19 +338,24 @@ echo '<!-- REQUEST POPUP -->
                                     <input type="text" class="input" value="" name="end_hour" placeholder="Hora" autocomplete="off">
                                 </div>
                                 
+                                
                                  <div class="content-input">
                                     <div class="text-desc"><strong>Sueldo *</strong></div>
                                    <input type="text" class="input" value="" name="payment" placeholder="Sueldo" autocomplete="off">
                                 </div>
                                 
+                                
                                 <div class="content-input">
                                 <div class="text-desc"><strong>Ayuda con el pasaje *</strong></div>
+                               
                                   <select class="select_group" name="transport_help" style="margin-top:10px; margin-bottom:10px">
                                     		<option value="0">Seleccionar respuesta</option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                             
                                     </select>
+                                
+                                
                                </div>
                                 
                                <div class="content-check-box">
@@ -319,30 +365,35 @@ echo '<!-- REQUEST POPUP -->
                                  </div>
                                    		
                                       <label class="container_" value="facebook" name="facebook">Facebook
-                                   	    <input type="checkbox" name="hear_about" value="facebook" >
+                                   	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
+                                        
                                       <label class="container_" value="instagram" name="instagram">Instagram
-                                     	    <input type="checkbox" name="hear_about" value="instagram">
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
-                                      <label class="container_" value="television" name="tv">Televisión
-                                   	    <input type="checkbox" name="hear_about" value="television" >
+                                        
+                                      <label class="container_" value="televisión" name="tv">Televisión
+                                   	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                       <label class="container_" value="" name="newspaper">Periódico
-                                   	    <input type="checkbox" name="hear_about" value="newspaper" >
+                                   	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
+                                        
                                 </div>
-                                <div class="content-input">                                       
+                                <div class="content-input">
+                                       
                                   <label class="container_" value="" name="recomendation">Recomendación
-                               	    <input type="checkbox" name="hear_about" value="recomendation" >
+                               	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
+                                        
                                   <label class="container_" value="" name="other_listen_us">Otro
-                                     	    <input type="checkbox" name="hear_about" value="other_listen_us" >
+                                     	    <input type="checkbox" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
@@ -358,17 +409,16 @@ echo '<!-- REQUEST POPUP -->
                                 
                                <div class="agreementcontent">
                                <label class="container_" name="agreement">Estoy de acuerdo con los <a href="#">términos del Servicio</a>
-                                   	    <input type="checkbox" name="terms">
+                                   	    <input type="checkbox" >
                                       	 <span class="checkmark"></span>
                                </label>
                                </div>       
                                 
-                                <input type="submit" value="Hacer pedito">
+                                <input type="button" onClick="" value="Hacer pedito">
                                 
                            </div>
-						   <div id="request_results"></div>
-                        </form>            
+                            
+                            
                     </div>
-                </div>
-	';
-?>
+                    
+                   </div>

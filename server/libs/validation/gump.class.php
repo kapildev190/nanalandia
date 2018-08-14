@@ -405,7 +405,8 @@ class GUMP
                     foreach ($rules as $rule) {
                         $method = null;
                         $param = null;
-
+						if( $rule == '' )
+							continue;	
                         // Check if we have rule parameters
                         if (strstr($rule, ',') !== false) {
                             $rule   = explode(',', $rule);
