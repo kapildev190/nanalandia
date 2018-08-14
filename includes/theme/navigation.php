@@ -1,6 +1,21 @@
 <?php
 $loggedUserId   = isset($_SESSION['id']) ? $_SESSION['id'] : '';
 $loggedUserType = isset($_SESSION['type']) ? $_SESSION['type'] : '';
+
+if(isset($_SERVER['HTTPS'])){
+	$protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+}
+else{
+	$protocol = 'http';
+}
+//echo $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
+
+if ((strpos($_SERVER['REQUEST_URI'],'dashboard') !== false || strpos($_SERVER['REQUEST_URI'],'employee') !== false) && $loggedUserId  == '') {
+	$url = $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
+	header("Location: $url");
+	die();
+}
+
 ?>
 	<header role="banner" class="navbar navbar-fixed-top navbar-default forborder" style="">
             <div class="container">

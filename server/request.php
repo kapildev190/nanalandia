@@ -37,7 +37,7 @@ include_once 'classes.php';
  */
 try{
     //Create the database object
-    $db = new MysqliDb ('localhost', 'root', '', 'demo_nanalandia');
+    $db = new MysqliDb ('localhost', 'root', 'ppsdo786123', 'nanalandia');
 
 }catch (Exception $e){
     //If any exception occurs, print error message
