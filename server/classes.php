@@ -185,8 +185,10 @@ class Request{
         }
     }
 
-    function getRequestDetails($a, $db){
-        $this->db->where("a", "$a");
+    function getRequestDetails($requestId,$userId = null){
+		if( $userId != null )
+			$this->db->where("user_id", $userId);
+        $this->db->where("id", $requestId);
         if(!empty($this->db->getOne("requests"))) {
             return 1;
         }
@@ -195,11 +197,15 @@ class Request{
         }
     }
 	
+	
+	
 	function getAllRequest($id){
 		if($id > 1){
 			$this->db->where("user_id", "$id");
 		}
-		$req = $this->db->get("requests");
+		$this->db->join('users', 'users.id = requests.user_id','INNER');
+		$req = $this->db->get('requests',null,'requests.*, users.firstname, users.lastname');
+		//echo $this->db->getLastQuery(); die('lol');
         if(!empty($req)) {
             return $req; 
         }
@@ -207,8 +213,8 @@ class Request{
             return 0;
         }
     }
-
-    function deleteRequest($a, $db){
+	
+	function deleteRequest($a, $db){
         $this->db->where('id', $a);
         if($this->db->delete('requests')){
             return 1;
@@ -218,9 +224,43 @@ class Request{
         }
     }
 
-    function changeRequestStatus($a, $db){
-
+ 	function changeRequestStatus($id,$data){
+		$this->db->where('id', $id);
+		 if($this->db->update('requests',$data)){
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
+
+	function uploadRequestReceipt($id,$path){
+		$this->db->where('id', $id);
+		//$this->db->update('requests',array('path' => $path));
+		 if($this->db->update('requests',array('path' => $path))){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+	}
+
+	function getAllRequestForDropdown($id){
+		if($id > 1){
+			$this->db->where("user_id", "$id");
+		}
+		$this->db->join("users u", "u.id=requests.user_id", "INNER");
+		$req = $this->db->get("requests",null,"requests.id,u.firstname,u.lastname");
+		//echo $this->db->getLastQuery();
+        if(!empty($req)) {
+            return $req; 
+        }
+        else{
+            return 0;
+        }
+    }
+
+   
 }
 
 
@@ -276,8 +316,82 @@ class Employee{
             return 0;
         }
     }
-
-    function changeEmployeeStatus($a, $db){
-
+	
+	function isEmployeeHired($employeeId){
+        $this->db->where("id", $employeeId);
+		$req = $this->db->getOne("employee",'status');
+        if(!empty($req)) {
+			if( $req['status'] == 3 )
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+	
+	function hireEmployee($employeeId,$requestId){
+		$this->db->where('id', $employeeId);
+		 if($this->db->update('employee',array('status' => 3,'requestId' => $requestId))){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+	
+	function isHiredEmployeeForRequest($requestId){
+		$this->db->where('requestId', $requestId);
+		$this->db->where('status', 3);
+		if($this->db->getOne("employee")){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+	
+	function checkAlreadyAssigned($employeeId, $requestId){
+        $this->db->where("employeeId", $employeeId);
+        $this->db->where("requestId", $requestId);
+        if(!empty($this->db->getOne("assignedEmployees"))) {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+	
+	function assignEmployee($data){
+        if($this->db->insert('assignedEmployees', $data)){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+	
+	function getAllAsignedEmployees($requestId)
+	{
+		$this->db->where("assignedEmployees.requestId", $requestId);
+		$this->db->join("employee e", "e.id=assignedEmployees.employeeId", "INNER");
+		$req = $this->db->get("assignedEmployees",null,"e.id,e.fullname,e.status");
+		//echo $this->db->getLastQuery();
+        if(!empty($req)) {
+            return $req; 
+        }
+        else{
+            return 0;
+        }
+    }
+	
+    function changeEmployeeStatus($employeeId,$status){
+		$this->db->where('id', $employeeId);
+		 if($this->db->update('employee',array('status' => $status))){
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
 }
+

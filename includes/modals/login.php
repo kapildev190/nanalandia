@@ -24,7 +24,7 @@ echo '<!--LOGIN POP-->
 
                     <p>Aun no tienes cuenta?</p>
 
-                    <input type="submit" onClick="DisplayAndClose(\'#content-window-light-box\', \'#content-login-box\', \'#login_form\', \'#register_layout\',\'#content_register\')" value="Registrate">
+                    <input type="button" onClick="DisplayAndClose(\'#content-window-light-box\', \'#content-login-box\', \'#login_form\', \'#register_layout\',\'#content_register\')" value="Registrate">
                 </form>
             </div>
         </div>

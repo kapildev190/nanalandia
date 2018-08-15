@@ -10,7 +10,18 @@ else{
 }
 //echo $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
 
-if ((strpos($_SERVER['REQUEST_URI'],'dashboard') !== false || strpos($_SERVER['REQUEST_URI'],'employee') !== false) && $loggedUserId  == '') {
+if ((strpos($_SERVER['REQUEST_URI'],'dashboard') !== false || strpos($_SERVER['REQUEST_URI'],'employee') !== false) && $loggedUserId  == '' ) {
+	$url = $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
+	header("Location: $url");
+	die();
+}
+if ( strpos($_SERVER['REQUEST_URI'],'employee') !== false && ( $loggedUserId  != '' && $loggedUserType == 0 ) ) {
+	$url = $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
+	header("Location: $url");
+	die();
+}
+
+if ( strpos($_SERVER['REQUEST_URI'],'candidates') !== false && ( $loggedUserId  == '' || $loggedUserType == 1 ) ) {
 	$url = $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
 	header("Location: $url");
 	die();
@@ -43,7 +54,7 @@ if ((strpos($_SERVER['REQUEST_URI'],'dashboard') !== false || strpos($_SERVER['R
 								if( $loggedUserType == 0 ) { // customer
 							?>
 								<li>
-									<a href="#"><p>Mis solicitudes</p><div class="crta"></div></a>
+									<a href="dashboard.php"><p>Mis solicitudes</p><div class="crta"></div></a>
 								</li>
 								<li>
 									<a href="javascript:;" onClick="Display('#makerequest', '#content_makerequest');"><p>Nueva solicitud</p><div class="crta"></div></a>
@@ -71,9 +82,9 @@ if ((strpos($_SERVER['REQUEST_URI'],'dashboard') !== false || strpos($_SERVER['R
                             <li>
 							<?php if( $loggedUserId > 0 ){ ?>
                                 <a href="<?php echo $root.'logout.php';?>" class="btnmenu"><img src="assets/img/iconmenubtn.png" alt="iconmenubtn"><div class="crtica"></div>Cerrar sesión</a>
-                                <?php if( $loggedUserType == 1 ){ ?>
-									<a href="#section1" class="btnmenu" style="text-align:center" onClick="Display('#makerequest', '#content_makerequest')">Contratar</a>													
-								<?php } ?>
+                                <?php //if( $loggedUserType == 1 ){ ?>
+									<!--a href="#section1" class="btnmenu" style="text-align:center" onClick="Display('#makerequest', '#content_makerequest')">Contratar</a-->													
+								<?php //} ?>
 							<?php } else {?>	
                                 <a href="javascript:;" onClick="Display('#content-window-light-box', '#content-login-box')" class="btnmenu"><img src="assets/img/iconmenubtn.png" alt="iconmenubtn"><div class="crtica"></div>Ingresar</a>
 							<?php } ?>	

@@ -15,15 +15,7 @@ if(!isset($_SESSION))
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <!-- CSS -->
-		<?php if(!isset($_SESSION)) 
-			{ 
-				session_start(); 
-			}			
-        include_once 'includes/theme/css.php';
-		
-		?>
-
-  
+		<?php include_once 'includes/theme/css.php'; ?>  
     </head>
     <body>
         <!-- TOP HEADER -->
@@ -41,7 +33,9 @@ if(!isset($_SESSION))
 		//
 		include_once 'server/request.php';
 		//Create request class object (Edit)
+		$request  = new Request($db);
 		$employee = new Employee($db);
+		$requests = $request->getAllRequestForDropdown('');
 		$emps = $employee->getAllEmployee($loggedUserId);
 		//echo "<prE>"; print_r($emps); die;
 		
@@ -59,37 +53,46 @@ if(!isset($_SESSION))
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 cont">
+					<div id="messageContainer"  ></div>
 				<div class="">
                 	<!--<div class="buttons_" >Contratar</div>-->
                     <a href="javascript:;" onClick="Display('#employee_layout', '#content_employee');"><div class="buttons_">Nuevo Empleado</div></a>
-					<h1>Mis <span>Empleados</span></h1> 			
+					<h1>Candidates</h1> 			
 					<table class="table" id="dtableo">
 					  <thead>
 					    <tr>
-					      <th>No.</th>
 					      <th>Nombre</th>
-					      <th>Fecha</th>
-					      <th>Estatus</th>
+					      <th>For Work</th>
+					      <th>Status</th>
+					      <th>No. Request</th>
 					      <th></th>
 					    </tr>
 					  </thead>
 					  <tbody>
-					    <!--tr>
-					      <td><p>0006</p></td>
-					      <td><p>Juan Roberto Casimiro Perez</p></td>
-					      <td><p>27-07-2018</p></td>
-					      <td><p class="redc">Pendiente pago</p></td>
-					      <td><p class="subir"><a href="#">Subir Comprobante</a></p></td>
-					    </tr-->
-						<?php $i = 1; foreach($emps as $key => $emp){ ?>
+					    <?php if(empty($emps)){ ?>
+								<tr> <td colspan="5" align="center"> <p> No Candidates </p></td> </tr>	
+						<?php }else{
+								$i = 1; foreach($emps as $key => $emp){ ?>
 							<tr>
-								<td scope="row"><p><?php echo $i; ?></p></td>
-								<td><p><?php echo $emp['fullname']; ?></p></td>
-								<td><p><?php echo $emp['cellphone']; ?></p></td>
-								<td><p><?php echo $emp['academic_level']; ?></p></td>
-								<td><p><?php echo $emp['marital_status']; ?></p></td>
+								<td scope="row"><p><?php echo ucfirst($emp['fullname']); ?></p></td>
+								<td><p><?php echo $emp['position']; ?></p></td>
+								<td><p class="<?php if( $emp['status'] == 1 ) echo 'redc'; else if( $emp['status'] == 2 ) echo 'purpc'; else if( $emp['status'] == 3 ) echo 'greenc';?>"><?php if( $emp['status'] == 1 ) echo 'Unemploy'; else if( $emp['status'] == 2 ) echo 'Assigned'; else if( $emp['status'] == 3 ) echo 'Hire'; ?></p></td>
+								<td class="requestDropdownTd"><p>
+									<select class="form-control requestDropdown">
+									<?php if( !empty($requests)){?>
+										<option value="" >Select Request</option>
+									<?php foreach($requests as $key=>$value){?>
+										<option value="<?php echo $value['id'];?>" ><?php echo trim(ucfirst($value['firstname']).' '.ucfirst($value['lastname']));?></option>
+									<?php }
+									}else{ ?>
+										<option value="" >No Request</option>
+									<?php } ?>
+									</select>
+								</p></td>
+								<td><p class="subir"><a data-id="<?php echo $emp['id'];?>" href="javascript:;" class="assignEmployee">aplicar</a></p></td>
 							</tr>
-						<?php $i++; } ?>
+						<?php $i++; } 
+						}?>
 					  </tbody>
 					</table>
 				</div>

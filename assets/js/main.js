@@ -25,6 +25,41 @@ function DisplayAndClose(class_display1, animar_div1, form, class_display2, anim
     Display(class_display2, animar_div2)
 }
 
+function showUploadForm(userId,tr){
+	$('#reqUserId').val(userId);
+	$('#trId').val(tr);
+	$('#uploadModal').modal('toggle');
+}
+
+function showUploadReceipt(path){	
+	$('#viewReceiptImg').attr('src','assets/upload/'+path);
+	$('#viewReceiptModal').modal('toggle');
+}
+
+function confirmPayment(userId,tr){	
+	var r = confirm("Are you sure to confirm payment?");
+    if (r == true) {
+		$.ajax({
+			type: 'post',
+			url: 'server/request.php?action=confirmPayment',
+			data: {'reqUserId':userId,'trId':tr},
+			dataType: 'json',
+			success: function (data) {
+				if(data['status']){ 
+					console.log(data['td']);
+					$('#'+data['tr']).find('.tdStatus').html(data['td']);
+					$('#'+data['tr']).find('.tdReceipt').html('Confirmar pago');
+				}else{
+					
+					//$('#employee_results').html(results);
+				}
+			}
+		});	
+    } 		
+}
+
+
+
 $(document).ready(function() {
     var sideslider = $('[data-toggle=collapse-side]');
     var sel = sideslider.attr('data-target');
@@ -41,6 +76,8 @@ $(document).ready(function() {
         };
         var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
     }
+
+	
 
     //Login Form
     $("#login_form").submit(function(e) {
@@ -169,5 +206,181 @@ $(document).ready(function() {
             }
         });
     });
+
+	//Upload Form
+    $("#uploadReceipt").submit(function(e) {
+        e.preventDefault();
+		//var formData = new FormData(this);
+		//console.log(formData);
+        $.ajax({
+            type: 'post',
+            url: 'server/request.php?action=uploadReceipt',
+            //data: $('#uploadReceipt').serialize(),
+			data:  new FormData(this),
+		    contentType: false,
+			cache: false,
+		    processData:false,
+            dataType: 'json',
+            success: function (data) {
+				//console.log(data);
+				//return false;
+                if(data['status']){
+                    //window.location = data['type'];
+					//alert(data['name']);
+					$('#upload_results').html(data['msg']);
+					setTimeout(function() { $('#uploadModal').modal('hide');}, 2000);
+					$('#'+data['tr']).find('td:last').html(data['name']);
+					$('#uploadReceipt').trigger("reset");
+					}else{
+                    $('#upload_results').html(data['msg']);
+                }
+            }
+        });
+    });
+	
+	
+	/***** Assign employee to request **************/
+	$(document).on('click', '.assignEmployee', function(event)
+	{
+		var parentTr   = $(this).parents('tr');
+		var employeeId = $(this).attr('data-id');
+		var requestId  = $(parentTr).find('.requestDropdown').val();
+		$('#messageContainer').addClass('hide');
+		$(parentTr).find('.requestDropdownTd').removeClass('has-error');
+		if( requestId <= 0 && employeeId <= 0 )
+		{
+			$('#messageContainer').removeClass('hide');
+			var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+				'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+				'<strong>Warning! </strong>Something went wrong. Please try again.</div>';
+			$('#messageContainer').html(results);
+			setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+			return false;
+		}
+		else if( requestId <= 0 )
+		{
+			$(parentTr).find('.requestDropdownTd').addClass('has-error');
+		}
+		else
+		{
+			$.ajax({
+				type	 : "POST",
+				dataType : "json",
+				data	 : {'employeeId':employeeId,'requestId':requestId},
+				url		 : 'server/request.php?action=assignEmployee',
+				beforeSend  : function () {
+					$(".loader_div").show();
+				},
+				complete: function () {
+					$(".loader_div").hide();
+				},
+				success: function(response)
+				{
+					if(response['status'])
+					{ 
+						$(parentTr).find('.requestDropdown').val('');
+						var results = '<div class="alert alert-success alert-dismissible" role="alert">\n' +
+							'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+							'<strong>Success!</strong>'+response['msg']+
+							'</div>';
+						$('#messageContainer').html(results);
+					}else{
+						var errors_list = response['msg'].toString().split(",");
+						var errors = '';
+						for(var i = 0; i < errors_list.length; i++){
+							errors += '<li>'+errors_list[i]+'</li>';
+						}
+						var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+							'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+							'<strong>Warning!</strong>'+errors+
+							'</div>';
+						$('#messageContainer').html(results);
+					}
+					$('#messageContainer').removeClass('hide');
+					setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+				},
+				error:function(response){
+					$('#messageContainer').removeClass('hide');
+					var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+						'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+						'<strong>Warning! </strong>Connection Error. Please try again.</div>';
+					$('#messageContainer').html(results);
+					setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+					return false;
+				}
+			});
+		}
+	});
+	
+	
+	/***** hire employee **************/
+	$(document).on('click', '.hireEmployee', function(event)
+	{ 
+		var parentTr   = $(this).parents('tr');
+		var employeeId = $(this).attr('data-employeeId');
+		var requestId  = $(this).attr('data-requestId');
+		$('#messageContainer').addClass('hide');
+		if( requestId <= 0 && employeeId <= 0 )
+		{
+			$('#messageContainer').removeClass('hide');
+			var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+				'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+				'<strong>Warning! </strong>Something went wrong. Please try again.</div>';
+			$('#messageContainer').html(results);
+			setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+			return false;
+		}
+		else
+		{
+			$.ajax({
+				type	 : "POST",
+				dataType : "json",
+				data	 : {'employeeId':employeeId,'requestId':requestId},
+				url		 : 'server/request.php?action=hireEmployee',
+				beforeSend  : function () {
+					$(".loader_div").show();
+				},
+				complete: function () {
+					$(".loader_div").hide();
+				},
+				success: function(response)
+				{
+					if(response['status'])
+					{ 
+						$(parentTr).find('.statusTd p').attr('class','').addClass('greenc').html('Hire');
+						$('.hireBtnTd').html('');
+						var results = '<div class="alert alert-success alert-dismissible" role="alert">\n' +
+							'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+							'<strong>Success!</strong>'+response['msg']+
+							'</div>';
+						$('#messageContainer').html(results);
+					}else{
+						var errors_list = response['msg'].toString().split(",");
+						var errors = '';
+						for(var i = 0; i < errors_list.length; i++){
+							errors += '<li>'+errors_list[i]+'</li>';
+						}
+						var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+							'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+							'<strong>Warning!</strong>'+errors+
+							'</div>';
+						$('#messageContainer').html(results);
+					}
+					$('#messageContainer').removeClass('hide');
+					setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+				},
+				error:function(response){
+					$('#messageContainer').removeClass('hide');
+					var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+						'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+						'<strong>Warning! </strong>Connection Error. Please try again.</div>';
+					$('#messageContainer').html(results);
+					setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+					return false;
+				}
+			});
+		}
+	});
+	
 	
 });

@@ -15,11 +15,7 @@ if(!isset($_SESSION))
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <!-- CSS -->
-		<?php if(!isset($_SESSION)) 
-			{ 
-				session_start(); 
-			}			
-        include_once 'includes/theme/css.php'; ?>
+		<?php   include_once 'includes/theme/css.php'; ?>
     </head>
     <body>
         <!-- TOP HEADER -->
@@ -39,7 +35,7 @@ if(!isset($_SESSION))
 		//Create request class object (Edit)
 		$request = new Request($db);
 		$reqs = $request->getAllRequest($loggedUserId);
-		//echo "<prE>"; print_r($req); die;
+		//echo "<prE>"; print_r($reqs); die;
 		
         include 'includes/modals/login.php';
 
@@ -48,6 +44,8 @@ if(!isset($_SESSION))
 		include 'includes/modals/request.php';
 		
 		include 'includes/modals/employee.php';
+		
+		include 'includes/modals/upload.php';
         ?>
 		
 		<div class="misc container-fluid">
@@ -55,30 +53,63 @@ if(!isset($_SESSION))
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
-						<a href="javascript:;" onClick="Display('#employee_layout', '#content_employee');"><div class="buttons_">Nuevo Empleado</div></a>
+						<?php if( isset($loggedUserType) && $loggedUserType == 1 ){?>
+							<a href="javascript:;" onClick="Display('#employee_layout', '#content_employee');"><div class="buttons_">Nuevo Empleado</div></a>
+						<?php } ?>	
 						<h1>Mis <span>contratos</span></h1> 
 							<table class="table table-striped" id="dtables">
 							  <thead>
 								<tr>
 								  <th scope="col">#</th>
-								  <th scope="col">Job Type</th>
-								  <th scope="col">Age Range</th>
-								  <th scope="col">Nationality</th>
-								  <th scope="col">For Work</th>								  
-								  <th scope="col">For Work</th>								  
+								  <th scope="col">Name</th>
+								  <th scope="col">Date</th>
+								  <th scope="col">Status</th>
+								  <th scope="col">Receipt</th>	
+								  <th scope="col">See Receipt</th>							  
 								</tr>
 							  </thead>
 							  <tbody>
-									<?php $i = 1; foreach($reqs as $key => $req){ ?>
-										<tr>
+									<?php 
+										if(empty($reqs)){ ?>
+										<tr> <td colspan="6" align="center"> <p> No contracts </p></td> </tr>	
+									<?php }else{
+											$i = 1; foreach($reqs as $key => $req){ 
+											//echo "<pre>"; print_r($req); echo "</pre>"; die;
+											$status = 'pending payment';
+											if($req['status'] == 1){
+												$status = 'Pendiente pago';
+												$class = 'redc';
+											}else if($req['status'] == 2){
+												$status = 'Depurando';
+												$class = 'greenc';
+											}else if($req['status'] == 3){
+												$status = 'Depurando candidatos';
+												$class = 'purpc';
+											}else{
+												$status = "Contratado";
+											}
+									?>
+										<tr id="tr_<?php echo $i; ?>">
 											<td scope="row"><p><?php echo $i; ?></p></td>
-											<td><p><?php echo $req['job_type']; ?></p></td>
-											<td><p><?php echo $req['range_age_employee']; ?></p></td>
-											<td><p><?php echo $req['employee_nationality']; ?></p></td>
-											<td><p><?php echo $req['work_to_be_done']; ?></p></td>
+											<td><a href="candidates.php?id=<?php echo $req['id']; ?>" ><?php echo trim(ucfirst($req['firstname']).' '.ucfirst($req['lastname'])); ?></a></td>											
 											<td><p><?php echo date('m-d-Y',strtotime($req['created_at'])); ?></p></td>
+											<td class="tdStatus"><p class="<?php echo $class; ?>"><?php echo $status; ?></p></td>
+											<!--td> <a href="javascript:void(0)" onClick="Display('#content-window-light-box-upload', '#content-upload-box');" data-id="<?php  echo $req['id']; ?>" class="btnmenu"><div class="crtica"></div>Subir Comprobante</a>  </td-->
+											<?php if( $loggedUserType == 0 ) { ?>
+												<td class="tdReceipt"> <a href="javascript:void(0)" onClick="showUploadForm('<?php echo $req['id']; ?>','<?php echo $i; ?>')" class="btnmenu"><div class="crtica"></div>Subir Comprobante</a>  </td>
+											  <?php } else if($req['status'] >= 3) { ?>
+												<td class="tdReceipt"> Confirmar pago </td>
+											  <?php } else if(isset($req['path']) && $req['path'] != '') { ?>
+												<td class="tdReceipt"> <a href="javascript:void(0)" onClick="confirmPayment('<?php echo $req['id']; ?>','<?php echo $i; ?>')" class="btnmenu"><div class="crtica"></div>
+Confirmar pago</a>  </td>
+											  <?php }else{ ?>
+											  <td> </td>
+											<?php } ?>
+											
+											<td> <a href="javascript:void(0)" onClick="showUploadReceipt('<?php echo $req['path']; ?>')" class="btnmenu"> <?php if(isset($req['path'])) { echo $req['path']; } ?>  </a> </td>
 										</tr>
-									<?php $i++; } ?>
+									<?php $i++; }
+									} ?>
 								
 							  </tbody>
 							</table>
@@ -145,6 +176,62 @@ if(!isset($_SESSION))
 			</div>
 			<!-- /.modal-dialog --> 
 		</div>
+
+		  <!-- Upload Modal -->
+		  <div class="modal fade" id="uploadModal" role="dialog">
+			<div class="modal-dialog modal-sm">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Subir Comprobante</h4>
+				</div>
+				
+				<div class="modal-body">
+				  <form id="uploadReceipt">
+						<div id="upload_results"></div>
+						<!--div id="image_preview"><img id="previewing" src="noimage.png" /></div-->
+						<!--hr id="line"-->
+						<input type="hidden" name="reqUserId" id="reqUserId" value=""/>
+						<input type="hidden" name="trId" id="trId" value=""/>
+						<div id="selectImage">
+							<label>Select Your Image</label><br/>
+							<input class="form_control" type="file" name="file" id="file" accept="image/*" required />							
+						</div>
+					
+				</div>
+				<div class="modal-footer">
+					<input type="submit" value="Upload" class="submit buttons_" />
+				</form>
+				  <!--button type="button" class="btn btn-default" data-dismiss="modal">Close</button-->
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <!-- View Receipt Modal -->
+		  <div class="modal fade" id="viewReceiptModal" role="dialog">
+			<div class="modal-dialog modal-md">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Receipt</h4>
+				</div>
+				
+				<div class="modal-body">
+				  <img src="" id="viewReceiptImg" title="Nanalandia"  alt="Nanalandia" class="img-responsive">
+				</div>
+				<div class="modal-footer">					
+					<!--button type="button" class="btn btn-default" data-dismiss="modal">Close</button-->
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  
+		
+		  
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!-- FOOTER -->
         <?php include_once 'includes/theme/footer.php'; ?>
         <!-- /FOOTER -->
