@@ -203,7 +203,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'register'){
                     'sector' => $_POST['sector'],
                     'city' => $_POST['city'],
                     'email' => $_POST['email'],
-                    'password' => md5($_POST['password'])
+                    'password' => md5($_POST['password']),
+                    'token' => md5($_POST['email'])
                 );
 
                 if($user->registerUser($data)){

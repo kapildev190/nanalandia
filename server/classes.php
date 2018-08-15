@@ -89,7 +89,15 @@ class Users{
     }
 
     function generateLink($email){
-        $link = $this->root.'/verify.php?token='.md5($email);
+		if(isset($_SERVER['HTTPS'])){
+			$protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+		}
+		else{
+			$protocol = 'http';
+		}
+		//echo $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
+		$siteurl = $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
+        $link = $siteurl.'/verify.php?token='.md5($email);
         return $link;
     }
 
