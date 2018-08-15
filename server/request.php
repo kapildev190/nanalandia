@@ -89,7 +89,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'login'){
                 //Step 2: Check user status
                 if($user->checkUserStatus($_POST['email'])){
                     //Step 3: Check user login
-					$userData = $user->checkLogin($_POST['email'], $_POST['password']);
+					$userData = $user->checkLogin($_POST['email'], md5($_POST['password']));
 					if( !empty($userData) ){
                         $_SESSION['id'] 		= $userData['id'];
                         $_SESSION['email'] 		= $userData['email'];
@@ -202,7 +202,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'register'){
                     'sector' => $_POST['sector'],
                     'city' => $_POST['city'],
                     'email' => $_POST['email'],
-                    'password' => $_POST['password']
+                    'password' => md5($_POST['password'])
                 );
 
                 if($user->registerUser($data)){
