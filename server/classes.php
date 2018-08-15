@@ -32,6 +32,25 @@ class Users{
             return 0;
         }
     }
+	
+	/*
+     * Function to check user token (Checked)
+     * @var $token - token
+     */
+    function checkUserToken($token){
+        $this->db->where("token", "$token");
+		return $this->db->getOne("users",'id,firstname,lastname');        
+    }
+	
+	function changeUserStatus($id,$status){
+		$this->db->where('id', $id);
+		 if($this->db->update('users',array('status'=>$status,'token'=>''))){			 
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
 
     /*
      * Function to check user account status (Checked)
@@ -70,7 +89,7 @@ class Users{
     }
 
     function generateLink($email){
-        $link = $_SERVER['HTTP_HOST'].'/verify.php?'.md5($email);
+        $link = $this->root.'/verify.php?token='.md5($email);
         return $link;
     }
 
@@ -81,13 +100,13 @@ class Users{
         date_default_timezone_set('America/Toronto');
         $mail = new PHPMailer();
         $mail->IsSMTP();
-        $mail->Host = 'mail.demoproject.eu.org'; //Mail Server Host
+        $mail->Host = 'ssl://smtp.googlemail.com'; //Mail Server Host
         $mail->Port = 465;
         $mail->SMTPAuth = true;
-        $mail->Username = 'admin@demoproject.eu.org'; //Email Username
-        $mail->Password = 'password'; //Email Password
-        $mail->SMTPSecure = 'ssl';
-        $mail->setFrom('admin@demoproject.eu.org');//From
+        $mail->Username = 'nitindeveloper23@gmail.com'; //Email Username
+        $mail->Password = 'nitin@123'; //Email Password
+        $mail->SMTPSecure = 'smtp';
+        $mail->setFrom('nitindeveloper23@gmail.com');//From
         $mail->AddAddress("$email"); //To
         $mail->IsHTML(true);
         $mail->Subject = "$subject"; //Subject
