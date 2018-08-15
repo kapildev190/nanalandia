@@ -37,7 +37,7 @@ include_once 'classes.php';
  */
 try{
     //Create the database object
-    $db = new MysqliDb ('localhost', 'root', '', 'demo_nanalandia');
+    $db = new MysqliDb ('localhost', 'root', 'ppsdo786123', 'nanalandia');
 
 }catch (Exception $e){
     //If any exception occurs, print error message
@@ -151,7 +151,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'register'){
             'lastname'    => 'required|alpha|max_len,50',
             'phone'    => 'required|phone_number|max_len,20',
             'cellphone'    => 'required|phone_number|max_len,20',
-            'direction'    => 'required|street_address|max_len,100',
+            'direction'    => 'required|max_len,100',
             'sector'    => 'required|max_len,50',
             'city'    => 'required|max_len,50',
             'email'    => 'required|valid_email|max_len,50',
