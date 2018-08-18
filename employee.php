@@ -46,14 +46,14 @@ if(!isset($_SESSION))
 		include 'includes/modals/request.php';
 		
 		include 'includes/modals/employee.php';
-        ?>
+    ?>
 
 
 <div class="misc container-fluid">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 cont">
-					<div id="messageContainer"  ></div>
+				<div id="messageContainer"  ></div>
 				<div class="">
                 	<!--<div class="buttons_" >Contratar</div>-->
                     <a href="javascript:;" onClick="Display('#employee_layout', '#content_employee');"><div class="buttons_">Nuevo Empleado</div></a>

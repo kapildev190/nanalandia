@@ -231,7 +231,7 @@ Confirmar pago</a>  </td>
 		  </div>
 		  
 		<!-- View Request Modal -->  
-		<div class="modal fade" id="viewCandidatePopup" role="dialog">
+		<div class="modal fade" id="viewRequestPopup" role="dialog">
 			<div class="modal-dialog modal-lg">
 			  <div class="modal-content">
 				<div class="modal-header">
