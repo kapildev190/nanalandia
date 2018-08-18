@@ -37,8 +37,8 @@ include_once 'classes.php';
  */
 try{
     //Create the database object
-    //$db = new MysqliDb ('localhost', 'root', '', 'demo_nanalandia');
-    $db = new MysqliDb ('localhost', 'root', 'ppsdo786123', 'nanalandia');
+    $db = new MysqliDb ('localhost', 'root', '', 'demo_nanalandia');
+   //$db = new MysqliDb ('localhost', 'root', 'ppsdo786123', 'nanalandia');
 
 }catch (Exception $e){
     //If any exception occurs, print error message
@@ -451,7 +451,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'uploadReceipt'){
     try{
 		
 		$sourcePath = $_FILES['file']['tmp_name']; // Storing source path of the file in a variable
-		$fileName = $_FILES['file']['name'];
+		$fileName = time().'_'.$_POST['reqUserId'];
 		$targetPath = "../assets/upload/".$fileName; // Target path where file is to be stored
 		move_uploaded_file($sourcePath,$targetPath) ; // Moving Uploaded file
 
@@ -649,3 +649,61 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'hireEmployee'){
         echo json_encode($arr);
     }
 }
+
+/*
+ * View Employee Detail
+ */
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'viewEmployee'){
+    try{	
+		$loggedUserId   	= isset($_SESSION['id']) ? $_SESSION['id'] : '';
+		$loggedUserType   	= isset($_SESSION['type']) ? $_SESSION['type'] : '';
+		if( $loggedUserId == '' || $loggedUserId <= 0 )
+		{
+			$arr['msg'] 	= 'Your login session has expired. Please login again!';
+			$arr['status'] 	= 0;
+			echo json_encode($arr);
+		}
+		else
+		{
+			$employee 	= new Employee($db);
+			$form 		= new GUMP();
+			$_POST 		= $form->sanitize($_POST);
+			$form->validation_rules(array(
+				'employeeId' => 'required'            
+			));
+			$form->filter_rules(array(
+				'employeeId' => 'trim|sanitize_string'
+			));
+			$validated_data = $form->run($_POST);
+			if($validated_data === false){
+				$arr['msg'] = $form->get_readable_errors(true);
+				$arr['status'] = 0;
+				echo json_encode($arr);
+			}else {
+				$employeeData = $employee->getEmployeeDetails(base64_decode($_POST['employeeId']));
+				//echo "<pre>";print_r($employeeData);
+				if( !$employeeData )
+				{
+					$arr['msg'] 	= 'Something went wrong. Please try again.';
+					$arr['status'] 	= 0;
+					echo json_encode($arr);
+				}
+				else 
+				{
+					$arr['status'] 	= 1;
+					$arr['data'] 	= $employeeData;
+					echo json_encode($arr);
+				}
+			}
+		}
+    }catch (Exception $e){
+        //If any exception occurs, print error message
+        $arr['msg'] 	= $e->getMessage();
+        $arr['status'] 	= 0;
+        echo json_encode($arr);
+    }
+}
+
+
+
+

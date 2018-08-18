@@ -21,7 +21,7 @@ if ( strpos($_SERVER['REQUEST_URI'],'employee') !== false && ( $loggedUserId  !=
 	die();
 }
 
-if ( strpos($_SERVER['REQUEST_URI'],'candidates') !== false && ( $loggedUserId  == '' || $loggedUserType == 1 ) ) {
+if ( strpos($_SERVER['REQUEST_URI'],'candidates') !== false && ( $loggedUserId  == '' ) ) {
 	$url = $protocol . "://" . $_SERVER['HTTP_HOST'].'/nanalandia';
 	header("Location: $url");
 	die();

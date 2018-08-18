@@ -74,7 +74,7 @@ if(!isset($_SESSION))
 						<?php }else{
 								$i = 1; foreach($emps as $key => $emp){ ?>
 							<tr>
-								<td scope="row"><p><?php echo ucfirst($emp['fullname']); ?></p></td>
+								<td scope="row" class="viewCandidate" data-id="<?php echo base64_encode($emp['id']);?>"><p><?php echo ucfirst($emp['fullname']); ?></p></td>
 								<td><p><?php echo $emp['position']; ?></p></td>
 								<td><p class="<?php if( $emp['status'] == 1 ) echo 'redc'; else if( $emp['status'] == 2 ) echo 'purpc'; else if( $emp['status'] == 3 ) echo 'greenc';?>"><?php if( $emp['status'] == 1 ) echo 'Unemploy'; else if( $emp['status'] == 2 ) echo 'Assigned'; else if( $emp['status'] == 3 ) echo 'Hire'; ?></p></td>
 								<td class="requestDropdownTd"><p>
@@ -123,7 +123,23 @@ if(!isset($_SESSION))
 		</div>
 	</div>
 </div>
-
+<div class="modal fade" id="viewCandidatePopup" role="dialog">
+	<div class="modal-dialog modal-lg">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal">&times;</button>
+		  <h4 class="modal-title">Candidato Details</h4>
+		</div>
+		
+		<div class="modal-body" id="popupBody">
+		</div>
+		</div>
+		<div class="modal-footer">					
+			<!--button type="button" class="btn btn-default" data-dismiss="modal">Close</button-->
+		</div>
+	  </div>
+	</div>
+</div>
  <!-- SCRIPT -->
  <?php include_once 'includes/theme/script.php'; ?>
 </body>

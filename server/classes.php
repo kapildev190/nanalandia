@@ -212,8 +212,8 @@ class Request{
         }
     }
 
-    function getRequestDetails($requestId,$userId = null){
-		if( $userId != null )
+    function getRequestDetails($requestId,$userId = null,$loggedUserType=null){
+		if( $userId != null && $loggedUserType != 1 )
 			$this->db->where("user_id", $userId);
         $this->db->where("id", $requestId);
         if(!empty($this->db->getOne("requests"))) {
@@ -311,10 +311,13 @@ class Employee{
         }
     }
 
-    function getEmployeeDetails($a, $db){
-        $this->db->where("a", "$a");
-        if(!empty($this->db->getOne("employee"))) {
-            return 1;
+    	
+	function getEmployeeDetails($employeeId){
+		
+        $this->db->where("id", $employeeId);
+		$req = $this->db->getOne("employee",'*');
+        if(!empty($req)) {
+            return $req;
         }
         else{
             return 0;
@@ -380,7 +383,7 @@ class Employee{
 	function checkAlreadyAssigned($employeeId, $requestId){
         $this->db->where("employeeId", $employeeId);
         $this->db->where("requestId", $requestId);
-        if(!empty($this->db->getOne("assignedEmployees"))) {
+        if(!empty($this->db->getOne("assignedemployees"))) {
             return 1;
         }
         else{
@@ -389,7 +392,7 @@ class Employee{
     }
 	
 	function assignEmployee($data){
-        if($this->db->insert('assignedEmployees', $data)){
+        if($this->db->insert('assignedemployees', $data)){
             return 1;
         }
         else{
@@ -399,9 +402,9 @@ class Employee{
 	
 	function getAllAsignedEmployees($requestId)
 	{
-		$this->db->where("assignedEmployees.requestId", $requestId);
-		$this->db->join("employee e", "e.id=assignedEmployees.employeeId", "INNER");
-		$req = $this->db->get("assignedEmployees",null,"e.id,e.fullname,e.status");
+		$this->db->where("assignedemployees.requestId", $requestId);
+		$this->db->join("employee e", "e.id=assignedemployees.employeeId", "INNER");
+		$req = $this->db->get("assignedemployees",null,"e.id,e.fullname,e.status");
 		//echo $this->db->getLastQuery();
         if(!empty($req)) {
             return $req; 
