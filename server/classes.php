@@ -212,7 +212,7 @@ class Request{
         }
     }
 
-    function getRequestDetails($requestId,$userId = null,$loggedUserType=null){
+    /*function getRequestDetails($requestId,$userId = null,$loggedUserType=null){
 		if( $userId != null && $loggedUserType != 1 )
 			$this->db->where("user_id", $userId);
         $this->db->where("id", $requestId);
@@ -222,8 +222,19 @@ class Request{
         else{
             return 0;
         }
-    }
+    }*/
 	
+	function getRequestDetail($requestId){
+		
+        $this->db->where("id", $requestId);
+		$req = $this->db->getOne("requests",'*');
+        if(!empty($req)) {
+            return $req;
+        }
+        else{
+            return 0;
+        }
+    }
 	
 	
 	function getAllRequest($id){

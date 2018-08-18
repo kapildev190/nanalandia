@@ -52,6 +52,7 @@ if(!isset($_SESSION))
             <div class="container">
 				<div class="row">
 					<div class="col-md-12">
+						<div id="messageContainer"  ></div>
 						<div class="table-responsive">
 						<?php if( isset($loggedUserType) && $loggedUserType == 1 ){?>
 							<a href="javascript:;" onClick="Display('#employee_layout', '#content_employee');"><div class="buttons_">Nuevo Empleado</div></a>
@@ -65,7 +66,8 @@ if(!isset($_SESSION))
 								  <th scope="col">Date</th>
 								  <th scope="col">Status</th>
 								  <th scope="col">Receipt</th>	
-								  <th scope="col">See Receipt</th>							  
+								  <th scope="col">See Receipt</th>	
+								  <th> </th>								  
 								</tr>
 							  </thead>
 							  <tbody>
@@ -107,6 +109,7 @@ Confirmar pago</a>  </td>
 											<?php } ?>
 											
 											<td> <a href="javascript:void(0)" onClick="showUploadReceipt('<?php echo $req['path']; ?>')" class="btnmenu"> <?php if(isset($req['path'])) { echo $req['path']; } ?>  </a> </td>
+											<td> <a href="javascript:void(0)" class="viewRequest" data-id="<?php echo base64_encode($req['id']);?>"><img src="assets/img/find-view.png" title="Request Detail"  alt="Request Detail"></a> </td>
 										</tr>
 									<?php $i++; }
 									} ?>
@@ -227,7 +230,23 @@ Confirmar pago</a>  </td>
 			</div>
 		  </div>
 		  
-		
+		<!-- View Request Modal -->  
+		<div class="modal fade" id="viewCandidatePopup" role="dialog">
+			<div class="modal-dialog modal-lg">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Contratación Detalles</h4>
+				</div>
+				
+				<div class="modal-body" id="popupBody">
+				</div>
+				</div>
+				<div class="modal-footer">					
+					<!--button type="button" class="btn btn-default" data-dismiss="modal">Close</button-->
+				</div>
+			  </div>
+			</div>
 		  
 		</div>
 

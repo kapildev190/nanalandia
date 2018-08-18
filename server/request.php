@@ -705,5 +705,60 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'viewEmployee'){
 }
 
 
+/*
+ * View Request Detail
+ */
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'viewRequest'){
+    try{	
+		$loggedUserId   	= isset($_SESSION['id']) ? $_SESSION['id'] : '';
+		$loggedUserType   	= isset($_SESSION['type']) ? $_SESSION['type'] : '';
+		if( $loggedUserId == '' || $loggedUserId <= 0 )
+		{
+			$arr['msg'] 	= 'Your login session has expired. Please login again!';
+			$arr['status'] 	= 0;
+			echo json_encode($arr);
+		}
+		else
+		{
+			$request 	= new Request($db);
+			$form 		= new GUMP();
+			$_POST 		= $form->sanitize($_POST);
+			$form->validation_rules(array(
+				'requestId' => 'required'            
+			));
+			$form->filter_rules(array(
+				'requestId' => 'trim|sanitize_string'
+			));
+			$validated_data = $form->run($_POST);
+			if($validated_data === false){
+				$arr['msg'] = $form->get_readable_errors(true);
+				$arr['status'] = 0;
+				echo json_encode($arr);
+			}else {
+				$requestData = $request->getRequestDetail(base64_decode($_POST['requestId']));
+				//echo "<pre>";print_r($requestData);
+				if( !$requestData )
+				{
+					$arr['msg'] 	= 'Something went wrong. Please try again.';
+					$arr['status'] 	= 0;
+					echo json_encode($arr);
+				}
+				else 
+				{
+					$arr['status'] 	= 1;
+					$arr['data'] 	= $requestData;
+					echo json_encode($arr);
+				}
+			}
+		}
+    }catch (Exception $e){
+        //If any exception occurs, print error message
+        $arr['msg'] 	= $e->getMessage();
+        $arr['status'] 	= 0;
+        echo json_encode($arr);
+    }
+}
+
+
 
 

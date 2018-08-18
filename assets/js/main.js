@@ -450,4 +450,71 @@ $(document).ready(function() {
 	});
 	
 	
+	/***** request detail **************/
+	$(document).on('click', '.viewRequest', function(event)
+	{ 
+		var requestId = $(this).attr('data-id');
+		$('#messageContainer').addClass('hide');
+		if( requestId <= 0 )
+		{
+			$('#messageContainer').removeClass('hide');
+			var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+				'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+				'<strong>Warning! </strong>Something went wrong. Please try again.</div>';
+			$('#messageContainer').html(results);
+			setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+			return false;
+		}
+		else
+		{
+			$.ajax({
+				type	 : "POST",
+				dataType : "json",
+				data	 : {'requestId':requestId},
+				url		 : 'server/request.php?action=viewRequest',
+				beforeSend  : function () {
+					$(".loader_div").show();
+				},
+				complete: function () {
+					$(".loader_div").hide();
+				},
+				success: function(response)
+				{
+					if(response['status'])
+					{ 
+						$('#viewRequestPopup').modal('show');
+						$("#popupBody").load("/nanalandia/includes/modals/viewRequest.php", {
+							data:response['data']
+						});
+						//$('#popupBody').html(response['html']);
+						$('#messageContainer').html(results);
+					}else{
+						var errors_list = response['msg'].toString().split(",");
+						var errors = '';
+						for(var i = 0; i < errors_list.length; i++){
+							errors += '<li>'+errors_list[i]+'</li>';
+						}
+						var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+							'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+							'<strong>Warning!</strong>'+errors+
+							'</div>';
+						$('#messageContainer').html(results);
+					}
+					$('#messageContainer').removeClass('hide');
+					setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+				},
+				error:function(response){
+					$('#messageContainer').removeClass('hide');
+					var results = '<div class="alert alert-danger alert-dismissible" role="alert">\n' +
+						'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+						'<strong>Warning! </strong>Connection Error. Please try again.</div>';
+					$('#messageContainer').html(results);
+					setTimeout(function(){ $('#messageContainer').addClass('hide'); }, 3000);
+					return false;
+				}
+			});
+		}
+	});
+	
+	
 });
