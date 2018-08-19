@@ -74,7 +74,7 @@ if(!isset($_SESSION))
 						<?php }else{
 								$i = 1; foreach($emps as $key => $emp){ ?>
 							<tr>
-								<td scope="row" class="viewCandidate" data-id="<?php echo base64_encode($emp['id']);?>"><p><?php echo ucfirst($emp['fullname']); ?></p></td>
+								<td style="cursor:pointer" scope="row" class="viewCandidate" data-id="<?php echo base64_encode($emp['id']);?>"><p><?php echo ucfirst($emp['fullname']); ?></p></td>
 								<td><p><?php echo $emp['position']; ?></p></td>
 								<td><p class="<?php if( $emp['status'] == 1 ) echo 'redc'; else if( $emp['status'] == 2 ) echo 'purpc'; else if( $emp['status'] == 3 ) echo 'greenc';?>"><?php if( $emp['status'] == 1 ) echo 'Unemploy'; else if( $emp['status'] == 2 ) echo 'Assigned'; else if( $emp['status'] == 3 ) echo 'Hire'; ?></p></td>
 								<td class="requestDropdownTd"><p>

@@ -212,7 +212,19 @@ class Request{
         }
     }
 
-    /*function getRequestDetails($requestId,$userId = null,$loggedUserType=null){
+	function viewInvoice($requestId){
+		$this->db->where("requests.id", $requestId);
+		$this->db->join('users', 'users.id = requests.user_id','INNER');
+		$req = $this->db->getOne('requests','requests.payment, users.firstname, users.lastname');
+        if(!empty($req)) {
+            return $req;
+        }
+        else{
+            return 0;
+        }
+    }
+	
+    function getRequestDetails($requestId,$userId = null,$loggedUserType=null){
 		if( $userId != null && $loggedUserType != 1 )
 			$this->db->where("user_id", $userId);
         $this->db->where("id", $requestId);
@@ -222,7 +234,7 @@ class Request{
         else{
             return 0;
         }
-    }*/
+    }
 	
 	function getRequestDetail($requestId){
 		

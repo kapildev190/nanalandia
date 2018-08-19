@@ -67,7 +67,7 @@ if(!isset($_SESSION))
 								  <th scope="col">Status</th>
 								  <th scope="col">Receipt</th>	
 								  <th scope="col">See Receipt</th>	
-								  <th> </th>								  
+								  <th>Action</th>								  
 								</tr>
 							  </thead>
 							  <tbody>
@@ -109,7 +109,10 @@ Confirmar pago</a>  </td>
 											<?php } ?>
 											
 											<td> <a href="javascript:void(0)" onClick="showUploadReceipt('<?php echo $req['path']; ?>')" class="btnmenu"> <?php if(isset($req['path'])) { echo $req['path']; } ?>  </a> </td>
-											<td> <a href="javascript:void(0)" class="viewRequest" data-id="<?php echo base64_encode($req['id']);?>"><img src="assets/img/find-view.png" title="Request Detail"  alt="Request Detail"></a> </td>
+											<td> 
+												<a href="javascript:void(0)" class="viewRequest" data-id="<?php echo base64_encode($req['id']);?>">View Detail</a> &nbsp;&nbsp;&nbsp;
+												<a href="javascript:void(0)" class="viewInvoice" data-id="<?php echo base64_encode($req['id']);?>">Invoice</a> 
+											</td>
 										</tr>
 									<?php $i++; }
 									} ?>
@@ -240,6 +243,23 @@ Confirmar pago</a>  </td>
 				</div>
 				
 				<div class="modal-body" id="popupBody">
+				</div>
+				</div>
+				<div class="modal-footer">					
+					<!--button type="button" class="btn btn-default" data-dismiss="modal">Close</button-->
+				</div>
+			  </div>
+			</div>
+			
+			<div class="modal fade" id="viewInvoicePopup" role="dialog">
+			<div class="modal-dialog modal-lg">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Factura</h4>
+				</div>
+				
+				<div class="modal-body" id="popupBodyInvoice">
 				</div>
 				</div>
 				<div class="modal-footer">					

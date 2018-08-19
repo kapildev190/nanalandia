@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2018 at 07:58 AM
+-- Generation Time: Aug 19, 2018 at 10:27 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -32,13 +32,6 @@ CREATE TABLE `assignedemployees` (
   `requestId` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `assignedemployees`
---
-
-INSERT INTO `assignedemployees` (`id`, `employeeId`, `requestId`, `created_at`) VALUES
-(1, 1, 1, '2018-08-17 21:54:16');
 
 -- --------------------------------------------------------
 
@@ -82,13 +75,6 @@ CREATE TABLE `employee` (
   `status` varchar(30) COLLATE latin1_spanish_ci NOT NULL DEFAULT '1',
   `requestId` int(11) DEFAULT NULL COMMENT 'this is the id of request for which candidate is hired'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
-
---
--- Dumping data for table `employee`
---
-
-INSERT INTO `employee` (`id`, `fullname`, `age`, `direction`, `marital_status`, `phone`, `cellphone`, `academic_level`, `position`, `wash`, `child_care`, `cook`, `drive`, `iron`, `gardening`, `elderly_care`, `any_desease`, `employment_situation`, `employment_experience`, `how_often_do_you_drink_alcohole`, `how_often_do_you_smoke`, `comments`, `employment_experience_time`, `employment_experience_time2`, `last_job`, `hour_to_job`, `night_or_day`, `how_much_do_you_want_earn`, `work_reference`, `personal_references`, `email`, `date`, `status`, `requestId`) VALUES
-(1, 'Gurdeep Singh', 28, 'Mohali', '10', '1020524110', '2010203040', 'Básico', 'Niñera', 1, 1, NULL, NULL, NULL, NULL, NULL, 'cold', 'Empleado', 'No', '0', 'Frecuentemente', '', '0', '0', '', 'test', 'Con Dormida', '', '1 -\r\n2 -', '1 -\r\n2 -', '', '2018-08-15 15:41:54', '3', 1);
 
 -- --------------------------------------------------------
 
@@ -211,13 +197,6 @@ CREATE TABLE `requests` (
   `path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `requests`
---
-
-INSERT INTO `requests` (`id`, `user_id`, `housing_type`, `floor_number`, `bedrooms_number`, `square_meter`, `people_in_house`, `children`, `children_number`, `age`, `pets`, `other_pet`, `no_of_pets`, `employee_type`, `job_type`, `range_age_employee`, `employee_nationality`, `academic_level`, `work_experience`, `religious_affiliation`, `other_religion_text`, `hour_modal`, `work_to_be_done`, `other_job`, `day_modal`, `starting_hour`, `end_hour`, `payment`, `transport_help`, `hear_about`, `other_listen_us_text`, `comments`, `terms`, `created_at`, `modified_at`, `status`, `path`) VALUES
-(1, '5', '1', '123', '12', '123', '10', '2', '10', '15', 'dog', '', '2', '2', 'Jardinero', '18-25', 'Haitiana', 'Bachiller', 'Si', 'christian', '', 'Con Dormida', 'clean', '', 'Domingos-Viernes', '10', '15', '1000', 'Si', 'facebook', '', 'hi this is testing', 'on', '2018-08-17 16:21:06', '2018-08-17 16:21:06', 1, '1534522981_1');
-
 -- --------------------------------------------------------
 
 --
@@ -247,8 +226,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `phone`, `cellphone`, `direction`, `sector`, `city`, `email`, `password`, `date`, `status`, `type`, `token`) VALUES
 (1, 'admin', '', '1234564810', '1212121412', 'india', '1212', '121', 'admin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', 1, 1, NULL),
-(5, 'test', 'test', '1232311231', '1231231231', 'test', 'rwar', 'rwar', 'gurdeepbrar207@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', 1, 0, ''),
-(7, 'guru', 'rwr', '2131231212', '1231231231', '2132', 'qwd', 'asd', 'testtt@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-15 17:46:48', 0, 0, 'aa50e886adeb1ca740215993f67e56be');
+(5, 'test', 'test', '1232311231', '1231231231', 'test', 'rwar', 'rwar', 'gurdeepbrar207@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', 1, 0, '');
 
 --
 -- Indexes for dumped tables
@@ -299,12 +277,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assignedemployees`
 --
 ALTER TABLE `assignedemployees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `hiring`
 --
@@ -314,7 +292,7 @@ ALTER TABLE `hiring`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --

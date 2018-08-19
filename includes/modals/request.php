@@ -81,17 +81,17 @@ echo '<!-- REQUEST POPUP -->
                                  </div>
                                    		
                                         <label class="container_" value="" name="dog" id="dog">Perros
-                                     	    <input type="checkbox" name="pets" value="dog" >
+                                     	    <input type="checkbox" name="pets[]" value="dog" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                         <label class="container_" value="" name="bird" id="bird">Aves
-                                     	    <input type="checkbox" name="pets" value="bird" >
+                                     	    <input type="checkbox" name="pets[]" value="bird" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                         <label class="container_" value="" name="cat" id="cat">Gatos
-                                     	    <input type="checkbox" name="pets" value="cat">
+                                     	    <input type="checkbox" name="pets[]" value="cat">
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
@@ -101,11 +101,11 @@ echo '<!-- REQUEST POPUP -->
                                 
                                 <div class="content-input">
 									<label class="container_" value="" name="no-pet" id="no-pet">Ninguno
-										<input type="checkbox" name="pets" value="no-pet">
+										<input type="checkbox" name="pets[]" value="no-pet">
 										<span class="checkmark"></span>
 									</label>
 									<label class="container_" value="" name="other" id="other">Otro
-										<input type="checkbox" name="pets" value="other">
+										<input type="checkbox" name="pets[]" value="other">
 										<span class="checkmark"></span>
 									</label>                                        
 									<input type="text" class="input" value="" name="other_pet" id="other_pet" placeholder="Otra Mascota" autocomplete="off">
@@ -197,23 +197,23 @@ echo '<!-- REQUEST POPUP -->
                                  </div>
                                    		
                                       <label class="container_" value="" name="christian">Cristiana
-                                     	    <input type="checkbox" name="religious_affiliation" value="christian" >
+                                     	    <input type="checkbox" name="religious_affiliation[]" value="christian" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                       <label class="container_" value="" name="catholic">Católica
-                                     	    <input type="checkbox" name="religious_affiliation" value="catholic" >
+                                     	    <input type="checkbox" name="religious_affiliation[]" value="catholic" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                       <label class="container_" value="" name="indifferent_religion">Indiferente
-                                   	    <input type="checkbox" name="religious_affiliation" value="indifferent_religion" >
+                                   	    <input type="checkbox" name="religious_affiliation[]" value="indifferent_religion" >
                                       	    <span class="checkmark"></span>
                                         </label>                                        
                                 </div>
                                 <div class="content-input">                                       
                                   <label class="container_" value="" name="other_religion">Otro
-										<input type="checkbox" name="religious_affiliation" value="other_religion">
+										<input type="checkbox" name="religious_affiliation[]" value="other_religion">
 										<span class="checkmark"></span>
 									</label>
                                   <input type="text" class="input" value="" name="other_religion_text" id="other_religion_text" placeholder="Otra Religión" autocomplete="off">
@@ -245,29 +245,29 @@ echo '<!-- REQUEST POPUP -->
                                  </div>
                                    		
                                       <label class="container_" value="" name="clean">Limpiar
-                                   	    <input type="checkbox" name="work_to_be_done" value="clean" >
+                                   	    <input type="checkbox" name="work_to_be_done[]" value="clean" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                       <label class="container_" value="" name="wash">Lavar
-                                   	    <input type="checkbox" name="work_to_be_done" value="wash"  >
+                                   	    <input type="checkbox" name="work_to_be_done[]" value="wash"  >
                                       	    <span class="checkmark"></span>
                                         </label>
                                       <label class="container_" value="" name="child_security">Cuidar niños
-                                   	    <input type="checkbox" name="work_to_be_done" value="child_security" >
+                                   	    <input type="checkbox" name="work_to_be_done[]" value="child_security" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         <label class="container_" value="" name="cook">Cocinar
-                                     	    <input type="checkbox" name="work_to_be_done" value="cook">
+                                     	    <input type="checkbox" name="work_to_be_done[]" value="cook">
                                       	    <span class="checkmark"></span>
                                         </label>
                                 </div>
                                 <div class="content-input">
                                     <label class="container_" value="" name="iron">Planchar
-                               	    <input type="checkbox" name="work_to_be_done" value="iron">
+                               	    <input type="checkbox" name="work_to_be_done[]" value="iron">
                                       	    <span class="checkmark"></span>
                                         </label>
                                   <label class="container_" value="" name="other_job">Otro
-                                     	    <input type="checkbox" name="work_to_be_done" value="other_job">
+                                     	    <input type="checkbox" name="work_to_be_done[]" value="other_job">
                                       	    <span class="checkmark"></span>
                                         </label>                                        
                                         <input type="text" class="input" value="" name="other_job" placeholder="Otra Ocupación" autocomplete="off">
@@ -319,30 +319,30 @@ echo '<!-- REQUEST POPUP -->
                                  </div>
                                    		
                                       <label class="container_" value="facebook" name="facebook">Facebook
-                                   	    <input type="checkbox" name="hear_about" value="facebook" >
+                                   	    <input type="checkbox" name="hear_about[]" value="facebook" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                       <label class="container_" value="instagram" name="instagram">Instagram
-                                     	    <input type="checkbox" name="hear_about" value="instagram">
+                                     	    <input type="checkbox" name="hear_about[]" value="instagram">
                                       	    <span class="checkmark"></span>
                                         </label>
                                       <label class="container_" value="television" name="tv">Televisión
-                                   	    <input type="checkbox" name="hear_about" value="television" >
+                                   	    <input type="checkbox" name="hear_about[]" value="television" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         
                                       <label class="container_" value="" name="newspaper">Periódico
-                                   	    <input type="checkbox" name="hear_about" value="newspaper" >
+                                   	    <input type="checkbox" name="hear_about[]" value="newspaper" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                 </div>
                                 <div class="content-input">                                       
                                   <label class="container_" value="" name="recomendation">Recomendación
-                               	    <input type="checkbox" name="hear_about" value="recomendation" >
+                               	    <input type="checkbox" name="hear_about[]" value="recomendation" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                   <label class="container_" value="" name="other_listen_us">Otro
-                                     	    <input type="checkbox" name="hear_about" value="other_listen_us" >
+                                     	    <input type="checkbox" name="hear_about[]" value="other_listen_us" >
                                       	    <span class="checkmark"></span>
                                         </label>
                                         

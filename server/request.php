@@ -288,7 +288,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'request'){
             'job_type'    			=> 'required',
             'range_age_employee'	=> 'required',
             'employee_nationality'  => 'required',
-            //'academic_level'    	=> 'required',
+            'work_to_be_done'    	=> 'required',
             //'work_experience'    	=> 'required',
             'other_religion_text'   => $other_religion_text,
             'hour_modal'    		=> 'required',
@@ -341,6 +341,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'request'){
 		}else {
             //If data validation succeed then perform necessary action (Edit)
 			$_POST['user_id'] = $_SESSION['id'];
+			if( isset($_POST['pets']) && !empty($_POST['pets']) )
+			{
+				$_POST['pets'] = implode('|',$_POST['pets']);
+			}
+			if( isset($_POST['work_to_be_done']) && !empty($_POST['work_to_be_done']) )
+			{
+				$_POST['work_to_be_done'] = implode('|',$_POST['work_to_be_done']);
+			}
+			if( isset($_POST['hear_about']) && !empty($_POST['hear_about']) )
+			{
+				$_POST['hear_about'] = implode('|',$_POST['hear_about']);
+			}
+			if( isset($_POST['religious_affiliation']) && !empty($_POST['religious_affiliation']) )
+			{
+				$_POST['religious_affiliation'] = implode('|',$_POST['religious_affiliation']);
+			}
+			
+			
+			
 			//echo "<pre>"; print_r($_POST); die;
 			if($request->newRequest($_POST)){
 				$arr['msg'] 	= 'Request submitted Successfully!';
@@ -759,6 +778,60 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'viewRequest'){
     }
 }
 
+
+/*
+ * View Request Detail
+ */
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'viewInvoice'){
+    try{	
+		$loggedUserId   	= isset($_SESSION['id']) ? $_SESSION['id'] : '';
+		$loggedUserType   	= isset($_SESSION['type']) ? $_SESSION['type'] : '';
+		if( $loggedUserId == '' || $loggedUserId <= 0 )
+		{
+			$arr['msg'] 	= 'Your login session has expired. Please login again!';
+			$arr['status'] 	= 0;
+			echo json_encode($arr);
+		}
+		else
+		{
+			$request 	= new Request($db);
+			$form 		= new GUMP();
+			$_POST 		= $form->sanitize($_POST);
+			$form->validation_rules(array(
+				'requestId' => 'required'            
+			));
+			$form->filter_rules(array(
+				'requestId' => 'trim|sanitize_string'
+			));
+			$validated_data = $form->run($_POST);
+			if($validated_data === false){
+				$arr['msg'] = $form->get_readable_errors(true);
+				$arr['status'] = 0;
+				echo json_encode($arr);
+			}else {
+				$requestData = $request->viewInvoice(base64_decode($_POST['requestId']));
+				//echo "<pre>";print_r($requestData);
+				if( !$requestData )
+				{
+					$arr['msg'] 	= 'Something went wrong. Please try again.';
+					$arr['status'] 	= 0;
+					echo json_encode($arr);
+				}
+				else 
+				{
+					$arr['status'] 	= 1;
+					$arr['data'] 	= $requestData;
+					echo json_encode($arr);
+				}
+			}
+		}
+    }catch (Exception $e){
+        //If any exception occurs, print error message
+        $arr['msg'] 	= $e->getMessage();
+        $arr['status'] 	= 0;
+        echo json_encode($arr);
+    }
+}
 
 
 

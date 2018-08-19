@@ -71,7 +71,7 @@ $requestId = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
 							$i = 1; 
 							foreach($assignedEmployees as $key => $emp){ ?>
 							<tr>
-								<td scope="row" class="viewCandidate" data-id="<?php echo base64_encode($emp['id']);?>"><p><?php echo ucfirst($emp['fullname']); ?></p></td>
+								<td style="cursor:pointer" scope="row" class="viewCandidate" data-id="<?php echo base64_encode($emp['id']);?>"><p><?php echo ucfirst($emp['fullname']); ?></p></td>
 								<td class="statusTd"><p class="<?php if( $emp['status'] == 2 ) echo 'purpc'; else if( $emp['status'] == 3 ) echo 'greenc';?>"><?php if( $emp['status'] == 2 ) echo 'Waiting'; else if( $emp['status'] == 3 ) echo 'Hire'; ?></p></td>
 								<td class="hireBtnTd"><?php if(!$isEmpHiredForReq && $loggedUserType == 0 ) { if( $emp['status'] == 2 ) {?><p class="subir"><a data-requestId="<?php echo $requestId;?>" data-employeeId="<?php echo $emp['id'];?>" href="javascript:;" class="hireEmployee">Hire</a></p><?php } } ?></td>
 							</tr>

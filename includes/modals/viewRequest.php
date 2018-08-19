@@ -1,44 +1,9 @@
-<?php $data = $_POST['data']; echo  "<pre>"; print_r($data); echo "</pre>";
-
-[id] => 1
-    [user_id] => 5
-    [housing_type] => 1
-    [floor_number] => 123
-    [bedrooms_number] => 12
-    [square_meter] => 123
-    [people_in_house] => 10
-    [children] => 2
-    [children_number] => 10
-    [age] => 15
-    [pets] => dog
-    [other_pet] => 
-    [no_of_pets] => 2
-    [employee_type] => 2
-    [job_type] => Jardinero
-    [range_age_employee] => 18-25
-    [employee_nationality] => Haitiana
-    [academic_level] => Bachiller
-    [work_experience] => Si
-    [religious_affiliation] => christian
-    [other_religion_text] => 
-    [hour_modal] => Con Dormida
-    [work_to_be_done] => clean
-    [other_job] => 
-    [day_modal] => Domingos-Viernes
-    [starting_hour] => 10
-    [end_hour] => 15
-    [payment] => 1000
-    [transport_help] => Si
-    [hear_about] => facebook
-    [other_listen_us_text] => 
-    [comments] => hi this is testing
-    [terms] => on
-    [created_at] => 2018-08-17 21:51:06
-    [modified_at] => 2018-08-17 21:51:06
-    [status] => 1
-    [path] => 1534522981_1
-
- ?>
+<?php $data = $_POST['data']; 
+$data['pets'] 					= explode('|',$data['pets']); 
+$data['religious_affiliation']  = explode('|',$data['religious_affiliation']); 
+$data['work_to_be_done'] 		= explode('|',$data['work_to_be_done']); 
+$data['hear_about'] 			= explode('|',$data['hear_about']); 
+?>
 <form id="request_form">
    <div class="content-input">
 		<div class="text-desc"><strong>Tipo de vivienda *</strong></div>
@@ -111,17 +76,17 @@
 		 </div>
 				
 				<label class="container_" value="" name="dog" id="dog">Perros
-					<input type="checkbox" name="pets" value="dog" <?php if( $data['pets'] == 'dog' ) echo 'checked';?> >
+					<input type="checkbox" name="pets" value="dog" <?php if( in_array('dog',$data['pets']))  echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 				
 				<label class="container_" value="" name="bird" id="bird">Aves
-					<input type="checkbox" name="pets" value="bird" <?php if( $data['pets'] == 'bird' ) echo 'checked';?>>
+					<input type="checkbox" name="pets" value="bird" <?php if( in_array('bird',$data['pets'])) echo 'checked';?>>
 					<span class="checkmark"></span>
 				</label>
 				
 				<label class="container_" value="" name="cat" id="cat">Gatos
-					<input type="checkbox" name="pets" value="cat" <?php if( $data['pets'] == 'cat' ) echo 'checked';?>>
+					<input type="checkbox" name="pets" value="cat" <?php if( in_array('cat',$data['pets'])) echo 'checked';?>>
 					<span class="checkmark"></span>
 				</label>
 				
@@ -131,14 +96,14 @@
 		
 		<div class="content-input">
 			<label class="container_" value="" name="no-pet" id="no-pet">Ninguno
-				<input type="checkbox" name="pets" value="no-pet" <?php if( $data['pets'] == 'no-pet' ) echo 'checked';?>>
+				<input type="checkbox" name="pets" value="no-pet" <?php if( in_array('no-pet',$data['pets'])) echo 'checked';?>>
 				<span class="checkmark"></span>
 			</label>
 			<label class="container_" value="" name="other" id="other">Otro
-				<input type="checkbox" name="pets" value="other" <?php if( $data['pets'] == 'other' ) echo 'checked';?>>
+				<input type="checkbox" name="pets" value="other" <?php if( in_array('other',$data['pets'])) echo 'checked';?>>
 				<span class="checkmark"></span>
 			</label>                                        
-			<input type="text" class="input" value="<?php echo $data['floor_number'];?>" name="other_pet" id="other_pet" placeholder="Otra Mascota" autocomplete="off">
+			<input type="text" class="input" value="<?php echo $data['other_pet'];?>" name="other_pet" id="other_pet" placeholder="Otra Mascota" autocomplete="off">
 		</div>
 		
 		<div class="content-input">
@@ -227,26 +192,26 @@
 		 </div>
 				
 			  <label class="container_" value="" name="christian">Cristiana
-					<input type="checkbox" name="religious_affiliation" value="christian" >
+					<input type="checkbox" name="religious_affiliation" value="christian" <?php if( in_array('christian',$data['religious_affiliation'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 			  </label>
 				
 			  <label class="container_" value="" name="catholic">Católica
-					<input type="checkbox" name="religious_affiliation" value="catholic" >
+					<input type="checkbox" name="religious_affiliation" value="catholic" <?php if( in_array('catholic',$data['religious_affiliation'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 				
 			  <label class="container_" value="" name="indifferent_religion">Indiferente
-				<input type="checkbox" name="religious_affiliation" value="indifferent_religion" >
+				<input type="checkbox" name="religious_affiliation" value="indifferent_religion" <?php if( in_array('indifferent_religion',$data['religious_affiliation'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>                                        
 		</div>
 		<div class="content-input">                                       
 		  <label class="container_" value="" name="other_religion">Otro
-				<input type="checkbox" name="religious_affiliation" value="other_religion">
+				<input type="checkbox" name="religious_affiliation" value="other_religion" <?php if( in_array('other_religion',$data['religious_affiliation'])) echo 'checked';?> >
 				<span class="checkmark"></span>
 			</label>
-		  <input type="text" class="input" value="" name="other_religion_text" id="other_religion_text" placeholder="Otra Religión" autocomplete="off">
+		  <input type="text" class="input" value="<?php echo ucfirst($data['other_religion_text']);?>" name="other_religion_text" id="other_religion_text" placeholder="Otra Religión" autocomplete="off">
 		</div>
 		
 	  </div>
@@ -256,12 +221,12 @@
 		<div class="text-desc"><strong>Modalidad de horario *</strong></div>
 	   
 		 <select class="select_group" name="hour_modal" style="margin-top:10px; margin-bottom:10px">
-					<option value="0">Seleccionar respuesta</option>
-					<option value="Con Dormida">Con Dormida</option>
-					<option value="Sin Dormida">Sin Dormida</option>
-					<option value="Fines de semana">Fines de semana</option>
-					<option value="3 o 4 veces por semana">3 o 4 veces por semana</option>
-					<option value="Salida quincenal">Salida quincenal</option>
+					<option value="">Seleccionar respuesta</option>
+					<option value="Con Dormida" <?php if( $data['hour_modal'] == 'Con Dormida' ) echo 'selected';?>>Con Dormida</option>
+					<option value="Sin Dormida" <?php if( $data['hour_modal'] == 'Sin Dormida' ) echo 'selected';?>>Sin Dormida</option>
+					<option value="Fines de semana" <?php if( $data['hour_modal'] == 'Fines de semana' ) echo 'selected';?>>Fines de semana</option>
+					<option value="3 o 4 veces por semana" <?php if( $data['hour_modal'] == '3 o 4 veces por semana' ) echo 'selected';?>>3 o 4 veces por semana</option>
+					<option value="Salida quincenal" <?php if( $data['hour_modal'] == 'Salida quincenal' ) echo 'selected';?>>Salida quincenal</option>
 					
 			</select>
 		
@@ -275,69 +240,69 @@
 		 </div>
 				
 			  <label class="container_" value="" name="clean">Limpiar
-				<input type="checkbox" name="work_to_be_done" value="clean" >
+				<input type="checkbox" name="work_to_be_done" value="clean" <?php if( in_array('clean',$data['work_to_be_done'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 			  <label class="container_" value="" name="wash">Lavar
-				<input type="checkbox" name="work_to_be_done" value="wash"  >
+				<input type="checkbox" name="work_to_be_done" value="wash"  <?php if( in_array('wash',$data['work_to_be_done'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 			  <label class="container_" value="" name="child_security">Cuidar niños
-				<input type="checkbox" name="work_to_be_done" value="child_security" >
+				<input type="checkbox" name="work_to_be_done" value="child_security" <?php if( in_array('child_security',$data['work_to_be_done'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 				<label class="container_" value="" name="cook">Cocinar
-					<input type="checkbox" name="work_to_be_done" value="cook">
+					<input type="checkbox" name="work_to_be_done" value="cook" <?php if( in_array('cook',$data['work_to_be_done'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 		</div>
 		<div class="content-input">
 			<label class="container_" value="" name="iron">Planchar
-			<input type="checkbox" name="work_to_be_done" value="iron">
+			<input type="checkbox" name="work_to_be_done" value="iron" <?php if( in_array('iron',$data['work_to_be_done'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 		  <label class="container_" value="" name="other_job">Otro
-					<input type="checkbox" name="work_to_be_done" value="other_job">
+					<input type="checkbox" name="work_to_be_done" value="other_job" <?php if( in_array('other_job',$data['work_to_be_done'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>                                        
-				<input type="text" class="input" value="" name="other_job" placeholder="Otra Ocupación" autocomplete="off">
+				<input type="text" class="input" value="<?php echo ucfirst($data['other_job']);?>" name="other_job" placeholder="Otra Ocupación" autocomplete="off">
 		</div>                                
 	   </div>
 	   <div class="content-input">
 		<div class="text-desc"><strong>Modalidad de horario *</strong></div>
 	   
 			<select class="select_group" name="day_modal" style="margin-top:10px; margin-bottom:10px">
-					<option value="0">Seleccionar respuesta</option>
-			  <option value="Lunes-Viernes" selected="selected">Lunes-Viernes</option>
-			  <option value="Lunes-Sabados">Lunes-Sabados</option>
-			  <option value="Domingos-Viernes">Domingos-Viernes</option>
-			  <option value="Viernes-Lunes">Viernes-Lunes</option>
-			  <option value="Sabado-Lunes">Sabado-Lunes</option>
-			  <option value="Otro">Otro</option>                                            
+				<option value="">Seleccionar respuesta</option>
+			  <option value="Lunes-Viernes" <?php if( $data['day_modal'] == 'Lunes-Viernes' ) echo "selected";?>>Lunes-Viernes</option>
+			  <option value="Lunes-Sabados" <?php if( $data['day_modal'] == 'Lunes-Sabados' ) echo "selected";?>>Lunes-Sabados</option>
+			  <option value="Domingos-Viernes" <?php if( $data['day_modal'] == 'Domingos-Viernes' ) echo "selected";?>>Domingos-Viernes</option>
+			  <option value="Viernes-Lunes" <?php if( $data['day_modal'] == 'Viernes-Lunes' ) echo "selected";?>>Viernes-Lunes</option>
+			  <option value="Sabado-Lunes" <?php if( $data['day_modal'] == 'Sabado-Lunes' ) echo "selected";?>>Sabado-Lunes</option>
+			  <option value="Otro" <?php if( $data['day_modal'] == 'Otro' ) echo "selected";?>>Otro</option>                                            
 			</select>                                
 	   </div>
 	   
 		<div class="content-input">
 			<div class="text-desc"><strong>Hora de entrada *</strong></div>
-		  <input type="text" class="input" value="" name="starting_hour" placeholder="Hora" autocomplete="off">
+		  <input type="text" class="input" value="<?php echo $data['starting_hour'];?>" name="starting_hour" placeholder="Hora" autocomplete="off">
 		</div>
 		
 		<div class="content-input">
 			<div class="text-desc"><strong>Hora de Salida *</strong></div>
-			<input type="text" class="input" value="" name="end_hour" placeholder="Hora" autocomplete="off">
+			<input type="text" class="input" value="<?php echo $data['end_hour'];?>" name="end_hour" placeholder="Hora" autocomplete="off">
 		</div>
 		
 		 <div class="content-input">
 			<div class="text-desc"><strong>Sueldo *</strong></div>
-		   <input type="text" class="input" value="" name="payment" placeholder="Sueldo" autocomplete="off">
+		   <input type="text" class="input" value="<?php echo $data['payment'];?>" name="payment" placeholder="Sueldo" autocomplete="off">
 		</div>
 		
 		<div class="content-input">
 		<div class="text-desc"><strong>Ayuda con el pasaje *</strong></div>
 		  <select class="select_group" name="transport_help" style="margin-top:10px; margin-bottom:10px">
-					<option value="0">Seleccionar respuesta</option>
-					<option value="Si">Si</option>
-					<option value="No">No</option>
+					<option value="">Seleccionar respuesta</option>
+					<option value="Si" <?php if($data['transport_help'] == 'Si') echo 'selected';?> >Si</option>
+					<option value="No" <?php if($data['transport_help'] == 'No') echo 'selected';?> >No</option>
 					
 			</select>
 	   </div>
@@ -349,51 +314,43 @@
 		 </div>
 				
 			  <label class="container_" value="facebook" name="facebook">Facebook
-				<input type="checkbox" name="hear_about" value="facebook" >
+				<input type="checkbox" name="hear_about" value="facebook" <?php if( in_array('facebook',$data['hear_about'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 			  <label class="container_" value="instagram" name="instagram">Instagram
-					<input type="checkbox" name="hear_about" value="instagram">
+					<input type="checkbox" name="hear_about" value="instagram" <?php if( in_array('instagram',$data['hear_about'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 			  <label class="container_" value="television" name="tv">Televisión
-				<input type="checkbox" name="hear_about" value="television" >
+				<input type="checkbox" name="hear_about" value="television" <?php if( in_array('television',$data['hear_about'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 				
 			  <label class="container_" value="" name="newspaper">Periódico
-				<input type="checkbox" name="hear_about" value="newspaper" >
+				<input type="checkbox" name="hear_about" value="newspaper" <?php if( in_array('newspaper',$data['hear_about'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 		</div>
 		<div class="content-input">                                       
 		  <label class="container_" value="" name="recomendation">Recomendación
-			<input type="checkbox" name="hear_about" value="recomendation" >
+			<input type="checkbox" name="hear_about" value="recomendation" <?php if( in_array('recomendation',$data['hear_about'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 		  <label class="container_" value="" name="other_listen_us">Otro
-					<input type="checkbox" name="hear_about" value="other_listen_us" >
+					<input type="checkbox" name="hear_about" value="other_listen_us" <?php if( in_array('other_listen_us',$data['hear_about'])) echo 'checked';?> >
 					<span class="checkmark"></span>
 				</label>
 				
-		  <input type="text" class="input" value="" name="other_listen_us_text" placeholder="Otra" autocomplete="off">
+		  <input type="text" class="input" value="<?php echo ucfirst($data['other_listen_us_text']);?>" name="other_listen_us_text" placeholder="Otra" autocomplete="off">
 		</div>
 		
 	   </div> 
 	   
 	   <div class="fulltextcontainer">
 		 <div class="text-desc"><strong>Observacion:</strong></div>
-		 <textarea name="comments" class="input textarea" placeholder="Comentarios" autocomplete="off"></textarea>
+		 <textarea name="comments" class="input textarea" placeholder="Comentarios" autocomplete="off"><?php echo ucfirst($data['comments']);?></textarea>
 	   </div>
-		
-	   <div class="agreementcontent">
-	   <label class="container_" name="agreement">Estoy de acuerdo con los <a href="#">términos del Servicio</a>
-				<input type="checkbox" name="terms">
-				 <span class="checkmark"></span>
-	   </label>
-	   </div>       
-		
-		<input type="submit" value="Hacer pedito">
+		     
 		
    </div>
    <div id="request_results"></div>
