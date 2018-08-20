@@ -367,6 +367,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $action === 'request'){
 				echo json_encode($arr);
 			}else{
 				//If request save fails, print error messages
+				echo $this->db->getLastQuery(); die('lol');
 				$arr['msg'] 	= 'Something went wrong. Please try again!';
 				$arr['status'] 	= 0;
 				echo json_encode($arr);
