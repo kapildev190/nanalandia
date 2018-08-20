@@ -200,7 +200,7 @@ class MysqliDb
      * @var int
      */
 
-    public $pageLimit = 20;
+    public $pageLimit = 2;
     /**
      * Variable that holds total pages count of last paginate() query
      *

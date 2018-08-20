@@ -249,12 +249,13 @@ class Request{
     }
 	
 	
-	function getAllRequest($id){
+	function getAllRequest($id,$page=1){
 		if($id > 1){
 			$this->db->where("user_id", "$id");
 		}
 		$this->db->join('users', 'users.id = requests.user_id','INNER');
-		$req = $this->db->get('requests',null,'requests.*, users.firstname, users.lastname');
+		//$req = $this->db->get('requests',null,'requests.*, users.firstname, users.lastname');
+		$req = $this->db->paginate('requests',$page,'requests.*, users.firstname, users.lastname');
 		//echo $this->db->getLastQuery(); die('lol');
         if(!empty($req)) {
             return $req; 
