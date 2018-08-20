@@ -1,6 +1,6 @@
 <?php
 echo '<!--link href="assets/css/jquery.dataTables.min.css" rel="stylesheet"/-->
-
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="assets/css/font-awesome.min.css">
 		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">

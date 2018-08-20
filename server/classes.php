@@ -204,7 +204,12 @@ class Request{
     }
 
     function newRequest($data){
-        if($this->db->insert('requests', $data)){
+        if($lastId = $this->db->insert('requests', $data)){			
+			$this->db->where("id", $lastId);
+			$lastId=str_pad($lastId, 4, '0', STR_PAD_LEFT);;
+			$lastupdate = array('invoiceNo'=>$lastId);
+			$this->db->update('requests',$lastupdate);
+			//echo $this->db->getLastQuery(); die('lol');
             return 1;
         }
         else{
@@ -256,53 +261,14 @@ class Request{
 		//$req = $this->db->get('requests',null,'requests.*, users.firstname, users.lastname');
 		$req = $this->db->paginate('requests',$page,'requests.*, users.firstname, users.lastname');
 		//echo $this->db->getLastQuery(); die('lol');
-			
-        if(!empty($req)) {
-            //$req['pagination'] = $pagination;
-			return $req; 
+		if(!empty($req)) {
+        	return $req; 
         }
         else{
             return 0;
         }
     }
-	
-	function paginateLink ($page) {
-			
-        $prev = ($page - 1);
-		$next = ($page + 1);
 		
-		$total = $this->db->totalCount;
-		
-		$total_pages = $this->db->totalPages;
-		
-		$pagination = '';
-
-		/* Create a PREV link if there is one */
-		if($page > 1)
-		{
-		$pagination .= '<a href="?page='.$prev.'">Previous</a>';
-		}
-		/* Loop through the total pages */
-		for($i = 1; $i <= $total_pages; $i++)
-		{
-			if(($page) == $i)
-			{
-				$pagination .= $i;
-			}
-			else
-			{
-				$pagination .= '<a href="?page='.$i.'">'.$i.'</a>';
-			}
-		}
-		
-		/* Print NEXT link if there is one */
-		if($page < $total_pages	)
-		{
-		$pagination .= '<a href="?page='.$next.'"> Next</a>';
-		}
-		return $pagination;
-    }
-	
 	function deleteRequest($a, $db){
         $this->db->where('id', $a);
         if($this->db->delete('requests')){
@@ -386,11 +352,35 @@ class Employee{
         }
     }
 	
-	function getAllEmployee($id){
+	function getAllRequest($id,$page=1){
 		if($id > 1){
 			$this->db->where("user_id", "$id");
 		}
-		$req = $this->db->get("employee");
+		$this->db->join('users', 'users.id = requests.user_id','INNER');
+		//$req = $this->db->get('requests',null,'requests.*, users.firstname, users.lastname');
+		$req = $this->db->paginate('requests',$page,'requests.*, users.firstname, users.lastname');
+		//echo $this->db->getLastQuery(); die('lol');
+		if(!empty($req)) {
+        	return $req; 
+        }
+        else{
+            return 0;
+        }
+    }
+	
+	function getAllEmployee($id,$page=1){
+		if($id > 1){
+			$this->db->where("user_id", "$id");
+		}
+		//$req = $this->db->get("employee");
+		$req = $this->db->paginate('employee',$page,'employee.*');
+		//echo $this->db->getLastQuery(); die('lol');
+		if(!empty($req)) {
+        	return $req; 
+        }
+        else{
+            return 0;
+        }
         if(!empty($req)) {
             return $req; 
         }
@@ -513,26 +503,30 @@ class Pagination{
 		/* Create a PREV link if there is one */
 		if($page > 1)
 		{
-		$pagination .= '<a href="?page='.$prev.'">Previous</a>';
+		$pagination .= '<li><a href="?page='.$prev.'"><i class="fa fa-angle-left"></i></a></li>';
 		}
 		/* Loop through the total pages */
 		for($i = 1; $i <= $total_pages; $i++)
 		{
 			if(($page) == $i)
 			{
-				$pagination .= $i;
+				//$pagination .= $i;
+				$pagination .= '<li><a href="" class="activeh">'.$i.'</a></li>';
 			}
 			else
 			{
-				$pagination .= '<a href="?page='.$i.'">'.$i.'</a>';
+				$pagination .= '<li><a href="?page='.$i.'">'.$i.'</a></li>';
 			}
 		}
 		
 		/* Print NEXT link if there is one */
 		if($page < $total_pages	)
 		{
-		$pagination .= '<a href="?page='.$next.'"> Next</a>';
+			$pagination .= '<li><a href="?page='.$next.'"> <i class="fa fa-angle-right"></i></a></li>';
 		}
+		
+		$pagination .= '<li><a href=""><span> '.$total_pages.' PAG.</span></a></li>';
+		
 		return $pagination;
     }
 }

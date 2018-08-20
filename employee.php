@@ -35,8 +35,14 @@ if(!isset($_SESSION))
 		//Create request class object (Edit)
 		$request  = new Request($db);
 		$employee = new Employee($db);
+		$pagination = new Pagination($db);
+		if(isset($_GET['page'])){
+			$page = $_GET['page'];
+		}else{
+			$page = 1;
+		}
 		$requests = $request->getAllRequestForDropdown('');
-		$emps = $employee->getAllEmployee($loggedUserId);
+		$emps = $employee->getAllEmployee($loggedUserId,$page);
 		//echo "<prE>"; print_r($emps); die;
 		
         include 'includes/modals/login.php';
@@ -98,19 +104,13 @@ if(!isset($_SESSION))
 				</div>
 			</div>
 		</div>
-		<!--div class="row">
+		<div class="row">
 			<div class="noofpages col-md-12">
 				<ul>
-					<li><a href=""><i class="fas fa-angle-double-left"></i></a></li>
-					<li><a href=""><i class="fas fa-angle-left"></i></a></li>
-					<li><a href="" class="activeh">1</a></li>
-					<li><a href="">2</a></li>
-					<li><a href="">3</a></li>
-					<li><a href=""><i class="fas fa-angle-right"></i></a></li>
-					<li><a href=""><span>33 PAG.</span></a></li>
+					<?php echo $link = $pagination->link($page); ?>
 				</ul>
 			</div>
-		</div-->
+		</div>
 	</div>
 </div>
 

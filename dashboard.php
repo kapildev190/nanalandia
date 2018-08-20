@@ -43,6 +43,7 @@ if(!isset($_SESSION))
 		$reqs = $request->getAllRequest($loggedUserId,$page);
 		//echo "<prE>"; print_r($reqs); echo $db->totalPages; die;
 	
+
         include 'includes/modals/login.php';
 
         include 'includes/modals/register.php';
@@ -126,18 +127,14 @@ Confirmar pago</a>  </td>
 							  </tbody>
 							</table>
 <div class="clearfix"></div>
-
-							<!--ul class="pagination pull-right">
-								<li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-								<li class="active"><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-							</ul-->
-							<?php //echo $link = $request->paginateLink($page); ?>
-							<?php echo $link = $pagination->link($page); ?>
+							<div class="row">
+								<div class="noofpages col-md-12">
+									<ul>
+										<?php echo $link = $pagination->link($page); ?>
+									</ul>
+								</div>
+							</div>							
+							<?php //echo $link = $pagination->link($page); ?>
 						</div>
 					</div>
 				</div>
