@@ -23,7 +23,7 @@ if(!isset($_SESSION))
         <!-- /TOP HEADER -->
 
         <!-- NAVIGATION -->
-        <?php //include_once 'includes/theme/navigation.php'; ?>
+        <?php include_once 'includes/theme/navigation.php'; ?>
         <!-- /NAVIGATION -->
 
         <?php 
@@ -34,6 +34,7 @@ if(!isset($_SESSION))
 		include_once 'server/request.php';
 		//Create request class object (Edit)
 		$request = new Request($db);
+		$pagination = new Pagination($db);
 		if(isset($_GET['page'])){
 			$page = $_GET['page'];
 		}else{
@@ -41,7 +42,7 @@ if(!isset($_SESSION))
 		}
 		$reqs = $request->getAllRequest($loggedUserId,$page);
 		//echo "<prE>"; print_r($reqs); echo $db->totalPages; die;
-		
+	
         include 'includes/modals/login.php';
 
         include 'includes/modals/register.php';
@@ -126,7 +127,7 @@ Confirmar pago</a>  </td>
 							</table>
 <div class="clearfix"></div>
 
-							<ul class="pagination pull-right">
+							<!--ul class="pagination pull-right">
 								<li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
 								<li class="active"><a href="#">1</a></li>
 								<li><a href="#">2</a></li>
@@ -134,7 +135,9 @@ Confirmar pago</a>  </td>
 								<li><a href="#">4</a></li>
 								<li><a href="#">5</a></li>
 								<li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-							</ul>
+							</ul-->
+							<?php //echo $link = $request->paginateLink($page); ?>
+							<?php echo $link = $pagination->link($page); ?>
 						</div>
 					</div>
 				</div>

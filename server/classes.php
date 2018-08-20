@@ -247,8 +247,7 @@ class Request{
             return 0;
         }
     }
-	
-	
+		
 	function getAllRequest($id,$page=1){
 		if($id > 1){
 			$this->db->where("user_id", "$id");
@@ -257,12 +256,51 @@ class Request{
 		//$req = $this->db->get('requests',null,'requests.*, users.firstname, users.lastname');
 		$req = $this->db->paginate('requests',$page,'requests.*, users.firstname, users.lastname');
 		//echo $this->db->getLastQuery(); die('lol');
+			
         if(!empty($req)) {
-            return $req; 
+            //$req['pagination'] = $pagination;
+			return $req; 
         }
         else{
             return 0;
         }
+    }
+	
+	function paginateLink ($page) {
+			
+        $prev = ($page - 1);
+		$next = ($page + 1);
+		
+		$total = $this->db->totalCount;
+		
+		$total_pages = $this->db->totalPages;
+		
+		$pagination = '';
+
+		/* Create a PREV link if there is one */
+		if($page > 1)
+		{
+		$pagination .= '<a href="?page='.$prev.'">Previous</a>';
+		}
+		/* Loop through the total pages */
+		for($i = 1; $i <= $total_pages; $i++)
+		{
+			if(($page) == $i)
+			{
+				$pagination .= $i;
+			}
+			else
+			{
+				$pagination .= '<a href="?page='.$i.'">'.$i.'</a>';
+			}
+		}
+		
+		/* Print NEXT link if there is one */
+		if($page < $total_pages	)
+		{
+		$pagination .= '<a href="?page='.$next.'"> Next</a>';
+		}
+		return $pagination;
     }
 	
 	function deleteRequest($a, $db){
@@ -449,3 +487,52 @@ class Employee{
     }
 }
 
+
+class Pagination{
+
+    var $db;
+    /*
+     * Constructor of Contract class
+     * @var $db is Mysqli DB Connection
+     */
+    public function __construct($db){
+        $this->db = $db;
+    }
+
+    function link($page){
+        
+        $prev = ($page - 1);
+		$next = ($page + 1);
+		
+		$total = $this->db->totalCount;
+		
+		$total_pages = $this->db->totalPages;
+		
+		$pagination = '';
+
+		/* Create a PREV link if there is one */
+		if($page > 1)
+		{
+		$pagination .= '<a href="?page='.$prev.'">Previous</a>';
+		}
+		/* Loop through the total pages */
+		for($i = 1; $i <= $total_pages; $i++)
+		{
+			if(($page) == $i)
+			{
+				$pagination .= $i;
+			}
+			else
+			{
+				$pagination .= '<a href="?page='.$i.'">'.$i.'</a>';
+			}
+		}
+		
+		/* Print NEXT link if there is one */
+		if($page < $total_pages	)
+		{
+		$pagination .= '<a href="?page='.$next.'"> Next</a>';
+		}
+		return $pagination;
+    }
+}
