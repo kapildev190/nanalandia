@@ -525,8 +525,8 @@ class Pagination{
 			$pagination .= '<li><a href="?page='.$next.'"> <i class="fa fa-angle-right"></i></a></li>';
 		}
 		
-		$pagination .= '<li><a href=""><span> '.$total_pages.' PAG.</span></a></li>';
-		
+		$pagination .= '<li><span> '.$total_pages.' PAG.</span></li>';
+	
 		return $pagination;
     }
 }
