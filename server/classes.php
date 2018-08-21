@@ -213,7 +213,7 @@ class Request{
             return 1;
         }
         else{
-			echo $this->db->getLastQuery(); die('lol');
+	   // echo $this->db->getLastQuery(); die('lol');
             return 0;
         }
     }
