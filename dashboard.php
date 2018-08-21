@@ -43,7 +43,6 @@ if(!isset($_SESSION))
 		$reqs = $request->getAllRequest($loggedUserId,$page);
 		//echo "<prE>"; print_r($reqs); echo $db->totalPages; die;
 	
-
         include 'includes/modals/login.php';
 
         include 'includes/modals/register.php';
@@ -118,7 +117,8 @@ Confirmar pago</a>  </td>
 											<td> <a href="javascript:void(0)" onClick="showUploadReceipt('<?php echo $req['path']; ?>')" class="btnmenu"> <?php if(isset($req['path'])) { echo $req['path']; } ?>  </a> </td>
 											<td> 
 												<a href="javascript:void(0)" class="viewRequest" data-id="<?php echo base64_encode($req['id']);?>">View Detail</a> &nbsp;&nbsp;&nbsp;
-												<a href="javascript:void(0)" class="viewInvoice" data-id="<?php echo base64_encode($req['id']);?>">Invoice</a> 
+												<!--a href="javascript:void(0)" class="viewInvoice" data-id="<?php echo base64_encode($req['id']);?>">Invoice</a--> 
+												<a href="invoice.php?id=<?php echo base64_encode($req['id']);?>" class="">Invoice</a>
 											</td>
 										</tr>
 									<?php $i++; }

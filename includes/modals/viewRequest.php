@@ -1,4 +1,4 @@
-<?php $data = $_POST['data']; 
+<?php $data = $_POST['data'];  
 $data['pets'] 					= explode('|',$data['pets']); 
 $data['religious_affiliation']  = explode('|',$data['religious_affiliation']); 
 $data['work_to_be_done'] 		= explode('|',$data['work_to_be_done']); 
@@ -36,7 +36,7 @@ $data['hear_about'] 			= explode('|',$data['hear_about']);
 	
 	<div class="content-input">
 			<div class="text-desc"><strong>Cuantas personas viven en la casa?</strong></div>
-			<input type="number" class="input" <?php echo $data['people_in_house'];?>" name="people_in_house" id="people_in_house" placeholder="" autocomplete="off">
+			<input type="number" class="input" value="<?php echo $data['people_in_house'];?>" name="people_in_house" id="people_in_house" placeholder="" autocomplete="off">
 	</div>
 	
 	
@@ -55,13 +55,13 @@ $data['hear_about'] 			= explode('|',$data['hear_about']);
 	
 	<div class="content-input">
 			<div class="text-desc"><strong>Cantidad de niños*</strong></div>
-			<input type="number" class="input" <?php echo $data['children_number'];?>" name="children_number" id="children_number" placeholder="Cantidad" autocomplete="off">
+			<input type="number" class="input" value="<?php echo $data['children_number'];?>" name="children_number" id="children_number" placeholder="Cantidad" autocomplete="off">
 	</div>
 	
 	
 	<div class="content-input">
 			<div class="text-desc"><strong>Edad</strong></div>
-			<input type="number" class="input" <?php echo $data['age'];?>" name="age" id="age" placeholder="Edad" autocomplete="off">
+			<input type="number" class="input" value="<?php echo $data['age'];?>" name="age" id="age" placeholder="Edad" autocomplete="off">
 	</div>
 	
 	

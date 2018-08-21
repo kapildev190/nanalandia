@@ -221,7 +221,7 @@ class Request{
 	function viewInvoice($requestId){
 		$this->db->where("requests.id", $requestId);
 		$this->db->join('users', 'users.id = requests.user_id','INNER');
-		$req = $this->db->getOne('requests','requests.payment, users.firstname, users.lastname');
+		$req = $this->db->getOne('requests','requests.payment,requests.invoiceNo,requests.created_at, users.firstname, users.lastname');
         if(!empty($req)) {
             return $req;
         }
